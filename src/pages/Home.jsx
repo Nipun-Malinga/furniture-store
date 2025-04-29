@@ -9,6 +9,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import InfoCard from '../components/InfoCard';
+import FurnitureViewer from '../components/FurnitureViewer';
+import chair from '../components/3DModels/Chair';
 
 const Home = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -37,7 +39,7 @@ const Home = () => {
           </GridItem>
           <GridItem>
             <Box width={'100%'} height={'100%'} background={'green.300'}>
-              Area for the 3D Model Viewer
+              <FurnitureViewer selectedColor='' modelPath='' model={chair} />
             </Box>
           </GridItem>
         </SimpleGrid>
