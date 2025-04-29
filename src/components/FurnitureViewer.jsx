@@ -10,9 +10,10 @@ import {
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import '@babylonjs/loaders/glTF';
 import { useEffect, useRef } from 'react';
+import useColorStore from '../store/useColorStore';
 
 const FurnitureViewer = (props) => {
-  console.log(props);
+  const { color } = useColorStore();
 
   const canvasRef = useRef(null);
   const engineRef = useRef(null);
@@ -29,6 +30,8 @@ const FurnitureViewer = (props) => {
       const scene = new Scene(engine);
       sceneRef.current = scene;
 
+      // scene.clearColor = new Color3(1, 1, 1).toColor4();
+
       const camera = new ArcRotateCamera(
         'camera',
         Math.PI / 2,
@@ -43,18 +46,18 @@ const FurnitureViewer = (props) => {
 
       camera.lowerBetaLimit = 0.1;
       camera.upperBetaLimit = Math.PI / 2;
-      camera.lowerAlphaLimit = 0;
+      camera.lowerAlphaLimit = Math.PI / 4;
       camera.upperAlphaLimit = Math.PI;
       camera.lowerRadiusLimit = 10;
       camera.upperRadiusLimit = 20;
 
       new HemisphericLight('light', new Vector3(1, 1, 0), scene);
 
-      if (props.modelPath && props.modelPath.trim() !== '') {
+      if (props.modelName) {
         try {
           const container = await SceneLoader.LoadAssetContainerAsync(
             '/public/3DModels/',
-            props.modelPath,
+            props.modelName,
             scene
           );
           container.addAllToScene();
@@ -81,15 +84,19 @@ const FurnitureViewer = (props) => {
     return () => {
       engineRef.current?.dispose();
     };
-  }, [props.modelPath, props.model]);
+  }, [props.modelName, props.model]);
 
   useEffect(() => {
-    if (modelRef.current && props.selectedColor) {
+    if (modelRef.current && sceneRef.current && color) {
       const material = new StandardMaterial('colorMaterial', sceneRef.current);
-      material.diffuseColor = Color3.FromHexString(props.selectedColor);
-      modelRef.current.material = material;
+      material.diffuseColor = Color3.FromHexString(color);
+
+      modelRef.current.getChildMeshes().forEach((mesh) => {
+        console.log(mesh.name);
+        mesh.material = material;
+      });
     }
-  }, [props.selectedColor]);
+  }, [color]);
 
   return (
     <canvas

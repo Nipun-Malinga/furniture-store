@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Breadcrumb,
   VStack,
@@ -12,19 +12,22 @@ import {
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import useColorStore from '../store/useColorStore';
+import { Slider } from '@chakra-ui/react';
 
 const colors = [
-  { color: 'red.500' },
-  { color: 'green.500' },
-  { color: 'blue.500' },
-  { color: 'purple.500' },
+  { color: '#F56565' },
+  { color: '#48BB78' },
+  { color: '#4299E1' },
+  { color: '#9F7AEA' },
 ];
 
 const InfoCard = (props) => {
   const [liked, setLiked] = useState(false);
   const { color, setColor } = useColorStore();
 
-  console.log(color);
+  useEffect(() => {
+    setColor(colors[0].color);
+  }, []);
 
   return (
     <VStack width={{ md: '100%' }} justifyContent={'center'} rowGap={'2rem'} alignItems={'start'}>
@@ -62,11 +65,13 @@ const InfoCard = (props) => {
           </HStack>
         </HStack>
       </VStack>
+
       <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
+
       <RadioGroup.Root
-        defaultValue='red.500'
+        defaultValue={colors[0].color}
         onValueChange={(value) => {
-          setColor(value);
+          setColor(value.value);
         }}
       >
         <HStack gap='6'>
@@ -87,13 +92,14 @@ const InfoCard = (props) => {
       </RadioGroup.Root>
       <Button background={'#3AA39F'}>Download</Button>
 
+      {/*TODO: Implement Save Changes */}
       <HStack color={'#3AA39F'} fontWeight={'medium'}>
         <FaHeart
           size={20}
           onClick={() => setLiked(!liked)}
           style={{
             cursor: 'pointer',
-            color: liked || 'transparent',
+            color: liked ? '#3AA39F' : 'transparent',
             stroke: '#3AA39F',
             strokeWidth: 40,
           }}
