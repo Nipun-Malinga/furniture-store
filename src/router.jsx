@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router';
-import Layout from './pages/Layout';
-import Home from './pages/Home';
 import FurnitureInfoContainer from './components/FurnitureInfoContainer';
+import Home from './pages/Home';
+import Layout from './pages/Layout';
 
 const router = createBrowserRouter([
   {
@@ -19,13 +19,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <FurnitureInfoContainer />, 
+            element: <FurnitureInfoContainer />,
           },
         ],
       },
     ],
   },
 ]);
-
 
 export default router;

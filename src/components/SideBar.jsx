@@ -1,7 +1,7 @@
-import { Box, Button, VStack, Text } from '@chakra-ui/react';
+import { Box, Button, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
-import data from '../data/data';
 import { useNavigate } from 'react-router-dom';
+import data from '../data/data';
 
 const SideBar = (props) => {
   const navigate = useNavigate();

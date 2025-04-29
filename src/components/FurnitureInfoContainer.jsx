@@ -1,10 +1,9 @@
-import { SimpleGrid, GridItem, Box } from '@chakra-ui/react';
-import InfoCard from './InfoCard';
-import FurnitureViewer from './FurnitureViewer';
-import React from 'react';
-import chair from './3DModels/Chair';
-import data from '../data/data';
+import { Box, GridItem, SimpleGrid } from '@chakra-ui/react';
+import React, { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+import data from '../data/data';
+import FurnitureViewer from './FurnitureViewer';
+import InfoCard from './InfoCard';
 
 const FurnitureInfoContainer = (props) => {
   const { categoryId, productId } = useParams();
@@ -14,7 +13,7 @@ const FurnitureInfoContainer = (props) => {
   return (
     <SimpleGrid columns={{ base: 1, md: 2 }} height={'100%'} width={'100%'} gap={'5rem'}>
       {category.map((category, key) => (
-        <>
+        <Fragment key={key}>
           <GridItem>
             {category.products
               .filter((product) => product.productId == productId)
@@ -41,7 +40,7 @@ const FurnitureInfoContainer = (props) => {
                 </Box>
               ))}
           </GridItem>
-        </>
+        </Fragment>
       ))}
     </SimpleGrid>
   );

@@ -5,14 +5,14 @@ import {
   HemisphericLight,
   Scene,
   StandardMaterial,
-  Vector3,
   Tools,
+  Vector3,
 } from '@babylonjs/core';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import '@babylonjs/loaders/glTF';
+import { Box, Button } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 import useColorStore from '../store/useColorStore';
-import { Box, Button } from '@chakra-ui/react';
 
 const FurnitureViewer = (props) => {
   const { color } = useColorStore();
