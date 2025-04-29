@@ -7,7 +7,7 @@ const SideBar = (props) => {
   const navigate = useNavigate();
 
   return (
-    <VStack height={'100vh'} overflow={'scroll'}>
+    <VStack height={'100%'} overflowY={'scroll'}>
       <Box as='ul'>
         {data.map((data, key) => (
           <Box as='li' mb={5} key={key}>

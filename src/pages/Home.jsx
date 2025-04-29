@@ -1,8 +1,7 @@
 import { Grid, GridItem, Text, useBreakpointValue } from '@chakra-ui/react';
 import React from 'react';
-import SideBar from '../components/SideBar';
-import FurnitureInfoContainer from '../components/FurnitureInfoContainer';
 import { useOutlet } from 'react-router-dom';
+import SideBar from '../components/SideBar';
 
 const Home = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -19,7 +18,7 @@ const Home = () => {
           base: '1fr',
           md: '200px 1fr',
         }}
-        height={'100%'}
+        height={'100vh'}
         padding={'2.5rem 1rem'}
       >
         {isDesktop && (
