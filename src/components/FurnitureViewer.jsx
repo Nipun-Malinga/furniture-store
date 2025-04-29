@@ -84,7 +84,7 @@ const FurnitureViewer = (props) => {
     return () => {
       engineRef.current?.dispose();
     };
-  }, [props.modelName, props.model]);
+  }, [props.modelName, props.model, color]);
 
   useEffect(() => {
     if (modelRef.current && sceneRef.current && color) {

@@ -1,33 +1,28 @@
-import React, { useEffect, useState } from 'react';
 import {
   Breadcrumb,
-  VStack,
+  Button,
   Heading,
-  Text,
   HStack,
+  RadioGroup,
   RatingGroup,
   Span,
-  RadioGroup,
-  Button,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import useColorStore from '../store/useColorStore';
-import { Slider } from '@chakra-ui/react';
 
-const colors = [
-  { color: '#F56565' },
-  { color: '#48BB78' },
-  { color: '#4299E1' },
-  { color: '#9F7AEA' },
-];
+const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
 
 const InfoCard = (props) => {
   const [liked, setLiked] = useState(false);
   const { color, setColor } = useColorStore();
 
+  const selectedColor = props.colors ? props.colors[0] : colors[0];
   useEffect(() => {
-    setColor(colors[0].color);
-  }, []);
+    setColor(selectedColor);
+  }, [props.colors]);
 
   return (
     <VStack width={{ md: '100%' }} justifyContent={'center'} rowGap={'2rem'} alignItems={'start'}>
@@ -68,8 +63,9 @@ const InfoCard = (props) => {
       <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
 
       <RadioGroup.Root
-        defaultValue={colors[0].color}
+        defaultValue={color}
         onValueChange={(value) => {
+          console.log(value.value);
           setColor(value.value);
         }}
       >
@@ -81,10 +77,10 @@ const InfoCard = (props) => {
                   <RadioGroup.ItemIndicator background={color} />
                 </RadioGroup.Item>
               ))
-            : colors.map((item, key) => (
-                <RadioGroup.Item key={key} value={item.color}>
+            : colors.map((color, key) => (
+                <RadioGroup.Item key={key} value={color}>
                   <RadioGroup.ItemHiddenInput />
-                  <RadioGroup.ItemIndicator background={item.color} />
+                  <RadioGroup.ItemIndicator background={color} />
                 </RadioGroup.Item>
               ))}
         </HStack>

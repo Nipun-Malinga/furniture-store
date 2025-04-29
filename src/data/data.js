@@ -1,4 +1,5 @@
 import chair from '../components/3DModels/Chair';
+import diningTable from '../components/3DModels/diningTable';
 
 const data = [
   {
@@ -92,8 +93,8 @@ const data = [
         price: 599.99,
         rating: 4.6,
         ratingCount: 280,
-        model: null,
-        colors: ['#DEB887', '#D2B48C'],
+        model: diningTable,
+        colors: ['#DEB887', '#70A48C'],
       },
       {
         productId: 8,
