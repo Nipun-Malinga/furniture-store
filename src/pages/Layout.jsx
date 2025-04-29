@@ -5,7 +5,7 @@ import { Outlet } from 'react-router';
 const Layout = () => {
   return (
     <>
-      <Box padding={5} height={'100vh'}>
+      <Box height={'100vh'}>
         <Outlet />
       </Box>
     </>
