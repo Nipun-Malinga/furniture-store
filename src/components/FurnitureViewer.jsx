@@ -6,11 +6,13 @@ import {
   Scene,
   StandardMaterial,
   Vector3,
+  Tools,
 } from '@babylonjs/core';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import '@babylonjs/loaders/glTF';
 import { useEffect, useRef } from 'react';
 import useColorStore from '../store/useColorStore';
+import { Box, Button } from '@chakra-ui/react';
 
 const FurnitureViewer = (props) => {
   const { color } = useColorStore();
@@ -19,6 +21,7 @@ const FurnitureViewer = (props) => {
   const engineRef = useRef(null);
   const sceneRef = useRef(null);
   const modelRef = useRef(null);
+  const cameraRef = useRef(null);
 
   useEffect(() => {
     const initBabylon = async () => {
@@ -40,6 +43,7 @@ const FurnitureViewer = (props) => {
         Vector3.Zero(),
         scene
       );
+      cameraRef.current = camera;
 
       camera.position = new Vector3(10, 2.5, 10);
       camera.attachControl(canvasRef.current, true);
@@ -98,16 +102,31 @@ const FurnitureViewer = (props) => {
     }
   }, [color]);
 
+  const takeScreenshot = (engineRef, cameraRef) => {
+    Tools.CreateScreenshotUsingRenderTarget(engineRef, cameraRef, { width: 1920, height: 1080 });
+  };
+
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        width: '100%',
-        height: '100%',
-        borderRadius: '12px',
-        outline: 'none',
-      }}
-    />
+    <Box height={'100%'} position={'relative'}>
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: '12px',
+          outline: 'none',
+        }}
+      />
+      <Button
+        position={'absolute'}
+        zIndex={'1'}
+        top={'2'}
+        left={'3'}
+        onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}
+      >
+        Download Screenshot
+      </Button>
+    </Box>
   );
 };
 
