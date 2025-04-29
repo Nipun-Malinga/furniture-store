@@ -31,16 +31,15 @@ const InfoCard = (props) => {
 
   return (
     <VStack width={{ md: '100%' }} justifyContent={'center'} rowGap={'2rem'} alignItems={'start'}>
-      {/*TODO:Add Category Name And Model Name From the Data*/}
       <Breadcrumb.Root>
         <Breadcrumb.List>
           <Breadcrumb.Item>
-            <Breadcrumb.Link href='#'>Demo Category</Breadcrumb.Link>
+            <Breadcrumb.Link href='#'>{props.category ?? 'Demo Category'}</Breadcrumb.Link>
           </Breadcrumb.Item>
           <Breadcrumb.Separator />
           <Breadcrumb.Item>
             <Breadcrumb.Link href='#' fontWeight={'bold'}>
-              Demo Model
+              {props.productName ?? 'Demo Model'}
             </Breadcrumb.Link>
           </Breadcrumb.Item>
         </Breadcrumb.List>
@@ -48,7 +47,7 @@ const InfoCard = (props) => {
 
       <VStack gap={{ md: '1rem' }} width={'100%'} height={'100%'} alignItems={'start'}>
         <Heading fontWeight='bold' fontSize={{ base: '1.5rem', md: '2.5rem' }}>
-          {props.name ?? 'Demo Model'}
+          {props.productName ?? 'Demo Model'}
         </Heading>
         <HStack width={'100%'} justifyContent={'space-between'}>
           <Text fontWeight={'medium'} fontSize={{ base: '1rem', md: '1.5rem' }}>
