@@ -33,7 +33,9 @@ const FurnitureViewer = (props) => {
       const scene = new Scene(engine);
       sceneRef.current = scene;
 
-      // scene.clearColor = new Color3(1, 1, 1).toColor4();
+      if (props.backgroundColor) {
+        scene.clearColor = Color3.FromHexString();
+      }
 
       const camera = new ArcRotateCamera(
         'camera',
@@ -45,15 +47,42 @@ const FurnitureViewer = (props) => {
       );
       cameraRef.current = camera;
 
-      camera.position = new Vector3(10, 2.5, 10);
-      camera.attachControl(canvasRef.current, true);
+      switch (props.camera) {
+        case 'top':
+          camera.position = new Vector3(0, 10, 0);
+          camera.setTarget(Vector3.Zero());
+          break;
+        case 'front':
+          camera.position = new Vector3(0, 3, -10);
+          camera.setTarget(Vector3.Zero());
+          break;
+        case 'back':
+          camera.position = new Vector3(0, 3, 10);
+          camera.setTarget(Vector3.Zero());
+          break;
+        case 'left':
+          camera.position = new Vector3(-10, 3, 0);
+          camera.setTarget(Vector3.Zero());
+          break;
+        case 'right':
+          camera.position = new Vector3(10, 3, 0);
+          camera.setTarget(Vector3.Zero());
+          break;
+        case 'isometric':
+          camera.position = new Vector3(10, 10, 10);
+          camera.setTarget(Vector3.Zero());
+          break;
+        default:
+          camera.position = new Vector3(10, 2.5, 10);
+          camera.attachControl(canvasRef.current, true);
 
-      camera.lowerBetaLimit = 0.1;
-      camera.upperBetaLimit = Math.PI / 2;
-      camera.lowerAlphaLimit = Math.PI / 4;
-      camera.upperAlphaLimit = Math.PI;
-      camera.lowerRadiusLimit = 10;
-      camera.upperRadiusLimit = 20;
+          camera.lowerBetaLimit = 0.1;
+          camera.upperBetaLimit = Math.PI / 2;
+          camera.lowerAlphaLimit = Math.PI / 4;
+          camera.upperAlphaLimit = Math.PI;
+          camera.lowerRadiusLimit = 10;
+          camera.upperRadiusLimit = 20;
+      }
 
       new HemisphericLight('light', new Vector3(1, 1, 0), scene);
 
@@ -117,15 +146,17 @@ const FurnitureViewer = (props) => {
           outline: 'none',
         }}
       />
-      <Button
-        position={'absolute'}
-        zIndex={'1'}
-        top={'2'}
-        left={'3'}
-        onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}
-      >
-        Download Screenshot
-      </Button>
+      {props.viewDownload && (
+        <Button
+          position={'absolute'}
+          zIndex={'1'}
+          top={'2'}
+          left={'3'}
+          onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}
+        >
+          Download Screenshot
+        </Button>
+      )}
     </Box>
   );
 };

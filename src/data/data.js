@@ -16,7 +16,7 @@ const data = [
         rating: 4.5,
         ratingCount: 245,
         model: chair,
-        colors: ['#FFD700', '#FFA500'],
+        colors: ['#FFD700', '#FFA500', '#33ecff'],
       },
       {
         productId: 2,

@@ -25,7 +25,13 @@ const InfoCard = (props) => {
   }, [props.colors]);
 
   return (
-    <VStack width={{ md: '100%' }} justifyContent={'center'} rowGap={'2rem'} alignItems={'start'}>
+    <VStack
+      width={{ md: '100%' }}
+      height={'100%'}
+      justifyContent={'center'}
+      rowGap={'2rem'}
+      alignItems={'start'}
+    >
       <Breadcrumb.Root>
         <Breadcrumb.List>
           <Breadcrumb.Item>
