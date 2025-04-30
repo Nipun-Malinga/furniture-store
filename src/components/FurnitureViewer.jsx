@@ -7,15 +7,27 @@ import {
   StandardMaterial,
   Tools,
   Vector3,
+  Animation,
 } from '@babylonjs/core';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import '@babylonjs/loaders/glTF';
 import { Box, Button } from '@chakra-ui/react';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useColorStore from '../store/useColorStore';
+import useAngleStore from '../store/useAngleStore';
+
+const positions = {
+  top: new Vector3(0, 10, 0),
+  front: new Vector3(0, 3, -10),
+  back: new Vector3(0, 3, 10),
+  left: new Vector3(-10, 3, 0),
+  right: new Vector3(10, 3, 0),
+  isometric: new Vector3(10, 10, 10),
+};
 
 const FurnitureViewer = (props) => {
   const { color } = useColorStore();
+  const { angle } = useAngleStore();
 
   const canvasRef = useRef(null);
   const engineRef = useRef(null);
@@ -46,34 +58,52 @@ const FurnitureViewer = (props) => {
         scene
       );
       cameraRef.current = camera;
+      camera.setTarget(Vector3.Zero());
 
       switch (props.camera) {
         case 'top':
-          camera.position = new Vector3(0, 10, 0);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.top;
           break;
         case 'front':
-          camera.position = new Vector3(0, 3, -10);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.front;
           break;
         case 'back':
-          camera.position = new Vector3(0, 3, 10);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.back;
           break;
         case 'left':
-          camera.position = new Vector3(-10, 3, 0);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.left;
           break;
         case 'right':
-          camera.position = new Vector3(10, 3, 0);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.right;
           break;
         case 'isometric':
-          camera.position = new Vector3(10, 10, 10);
-          camera.setTarget(Vector3.Zero());
+          camera.position = positions.isometric;
           break;
         default:
-          camera.position = new Vector3(10, 2.5, 10);
+          if (angle) {
+            switch (angle) {
+              case 'top':
+                animateCameraTo(camera, positions.top, scene);
+                break;
+              case 'front':
+                animateCameraTo(camera, positions.front, scene);
+                break;
+              case 'back':
+                animateCameraTo(camera, positions.back, scene);
+                break;
+              case 'left':
+                animateCameraTo(camera, positions.left, scene);
+                break;
+              case 'right':
+                animateCameraTo(camera, positions.right, scene);
+                break;
+              case 'isometric':
+                animateCameraTo(camera, positions.isometric, scene);
+                break;
+            }
+          } else {
+            camera.position = new Vector3(10, 2.5, 10);
+          }
           camera.attachControl(canvasRef.current, true);
 
           camera.lowerBetaLimit = 0.1;
@@ -117,7 +147,7 @@ const FurnitureViewer = (props) => {
     return () => {
       engineRef.current?.dispose();
     };
-  }, [props.modelName, props.model, color]);
+  }, [props.modelName, props.model, color, angle]);
 
   useEffect(() => {
     if (modelRef.current && sceneRef.current && color) {
@@ -129,11 +159,31 @@ const FurnitureViewer = (props) => {
         mesh.material = material;
       });
     }
-  }, [color]);
+  }, [color, angle]);
 
   const takeScreenshot = (engineRef, cameraRef) => {
     Tools.CreateScreenshotUsingRenderTarget(engineRef, cameraRef, { width: 1920, height: 1080 });
   };
+
+  const animateCameraTo = useCallback((camera, targetPosition, scene) => {
+    const anim = new Animation(
+      'cameraMove',
+      'position',
+      60,
+      Animation.ANIMATIONTYPE_VECTOR3,
+      Animation.ANIMATIONLOOPMODE_CONSTANT
+    );
+
+    const keys = [
+      { frame: 0, value: camera.position.clone() },
+      { frame: 30, value: targetPosition },
+    ];
+
+    anim.setKeys(keys);
+    camera.animations = [anim];
+
+    scene.beginAnimation(camera, 0, 30, false);
+  }, []);
 
   return (
     <Box height={'100%'} position={'relative'}>

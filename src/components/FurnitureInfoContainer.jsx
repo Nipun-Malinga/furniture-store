@@ -4,8 +4,12 @@ import { useParams } from 'react-router-dom';
 import data from '../data/data';
 import FurnitureViewer from './FurnitureViewer';
 import InfoCard from './InfoCard';
+import useAngleStore from '../store/useAngleStore';
+
+const angles = ['top', 'left', 'right', 'isometric'];
 
 const FurnitureInfoContainer = (props) => {
+  const { setAngle } = useAngleStore();
   const { categoryId, productId } = useParams();
 
   const category = data.filter((category) => category.categoryId == categoryId);
@@ -35,38 +39,21 @@ const FurnitureInfoContainer = (props) => {
                 .filter((product) => product.productId == productId)
                 .map((product, key) => (
                   <Fragment key={key}>
-                    <Box height={'100%'}>
-                      <FurnitureViewer
-                        selectedColor=''
-                        modelPath=''
-                        model={product.model}
-                        camera={'left'}
-                      />
-                    </Box>
-                    <Box height={'100%'}>
-                      <FurnitureViewer
-                        selectedColor=''
-                        modelPath=''
-                        model={product.model}
-                        camera={'front'}
-                      />
-                    </Box>
-                    <Box height={'100%'}>
-                      <FurnitureViewer
-                        selectedColor=''
-                        modelPath=''
-                        model={product.model}
-                        camera={'right'}
-                      />
-                    </Box>
-                    <Box height={'100%'}>
-                      <FurnitureViewer
-                        selectedColor=''
-                        modelPath=''
-                        model={product.model}
-                        camera={'isometric'}
-                      />
-                    </Box>
+                    {angles.map((angle, key) => (
+                      <Box
+                        height={'100%'}
+                        onClick={() => {
+                          setAngle(angle);
+                        }}
+                      >
+                        <FurnitureViewer
+                          selectedColor=''
+                          modelPath=''
+                          model={product.model}
+                          camera={angle}
+                        />
+                      </Box>
+                    ))}
                   </Fragment>
                 ))}
             </SimpleGrid>
