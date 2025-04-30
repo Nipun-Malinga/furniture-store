@@ -5,11 +5,9 @@ import data from '../data/data';
 import FurnitureViewer from './FurnitureViewer';
 import InfoCard from './InfoCard';
 import useAngleStore from '../store/useAngleStore';
-
-const angles = ['top', 'left', 'right', 'isometric'];
+import SideViewGrid from './SideViewGrid';
 
 const FurnitureInfoContainer = (props) => {
-  const { setAngle } = useAngleStore();
   const { categoryId, productId } = useParams();
 
   const category = data.filter((category) => category.categoryId == categoryId);
@@ -34,29 +32,7 @@ const FurnitureInfoContainer = (props) => {
                   />
                 </Box>
               ))}
-            <SimpleGrid width={'100%'} columns={{ base: 1, md: 2 }} gap={2}>
-              {category.products
-                .filter((product) => product.productId == productId)
-                .map((product, key) => (
-                  <Fragment key={key}>
-                    {angles.map((angle, key) => (
-                      <Box
-                        height={'100%'}
-                        onClick={() => {
-                          setAngle(angle);
-                        }}
-                      >
-                        <FurnitureViewer
-                          selectedColor=''
-                          modelPath=''
-                          model={product.model}
-                          camera={angle}
-                        />
-                      </Box>
-                    ))}
-                  </Fragment>
-                ))}
-            </SimpleGrid>
+            <SideViewGrid products={category.products} productId={productId} />
           </GridItem>
           <GridItem>
             {category.products
