@@ -1,10 +1,12 @@
 import { Box, Button, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import data from '../data/data';
+import useProduct from '../store/useProduct';
 
 const SideBar = (props) => {
   const navigate = useNavigate();
+  const { setProduct } = useProduct();
 
   return (
     <VStack height={'100%'} overflowY={'scroll'}>
@@ -18,11 +20,14 @@ const SideBar = (props) => {
               {data.products.map((product, key) => (
                 <Box as='li' key={key} marginY={1}>
                   <Button
-                    onClick={() =>
-                      navigate(`/category/${product.categoryId}/product/${product.productId}`)
-                    }
-                    variant={'outline'}
-                    width={'100%'}
+                    onClick={() => {
+                      if (props.type === 'navigate') {
+                        navigate(`/category/${product.categoryId}/product/${product.productId}`);
+                      }
+                      setProduct(product);
+                    }}
+                    variant='outline'
+                    style={{ width: '100%' }}
                   >
                     {product.name}
                   </Button>

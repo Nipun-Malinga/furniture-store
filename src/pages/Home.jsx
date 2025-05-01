@@ -23,7 +23,7 @@ const Home = () => {
       >
         {isDesktop && (
           <GridItem area={'aside'}>
-            <SideBar />
+            <SideBar type={'navigate'} />
           </GridItem>
         )}
         <GridItem area={'main'}>{outlet || <Text>Implement A Massage</Text>}</GridItem>
