@@ -1,0 +1,49 @@
+import { Mesh, MeshBuilder } from '@babylonjs/core';
+
+const rectangleRoom = (scene, width, length) => {
+  const parent = new Mesh('rectangleRoomParent', scene);
+
+  const wallThickness = 0.1;
+  const wallHeight = 1;
+
+  const wall1 = MeshBuilder.CreateBox(
+    'wall1',
+    {
+      width: width,
+      height: wallHeight,
+      depth: wallThickness,
+    },
+    scene
+  );
+  wall1.position.z = -length / 2;
+  wall1.parent = parent;
+
+  const wall2 = wall1.clone('wall2');
+  wall2.position.z = length / 2;
+  wall2.parent = parent;
+
+  const wall3 = MeshBuilder.CreateBox(
+    'wall3',
+    {
+      width: length,
+      height: wallHeight,
+      depth: wallThickness,
+    },
+    scene
+  );
+  wall3.rotation.y = Math.PI / 2;
+  wall3.position.x = -width / 2;
+  wall3.parent = parent;
+
+  const wall4 = wall3.clone('wall4');
+  wall4.position.x = width / 2;
+  wall4.parent = parent;
+
+  const ground = MeshBuilder.CreateGround('ground', { width, height: length }, scene);
+  ground.receiveShadows = true;
+  ground.position.y = -0.5;
+
+  return parent;
+};
+
+export default rectangleRoom;

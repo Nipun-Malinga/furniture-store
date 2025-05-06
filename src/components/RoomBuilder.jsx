@@ -1,23 +1,21 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Slider } from '@chakra-ui/react';
 import {
-  Engine,
-  Scene,
   ArcRotateCamera,
-  Vector3,
-  PointLight,
+  Engine,
   HemisphericLight,
-  MeshBuilder,
-  ShadowGenerator,
+  Scene,
+  // ShadowGenerator,
+  Vector3
 } from '@babylonjs/core';
-import { Box, Input } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+import React, { useEffect, useRef } from 'react';
+import rooms from '../data/rooms';
+import useRoom from '../store/useRoom';
 
-const RoomBuilder = () => {
+const RoomBuilder = (props) => {
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
-
-  const position = useRef(0);
-  position.current = 5;
+  const sunPositionRef = useRef(30);
+  const { room } = useRoom();
 
   useEffect(() => {
     const initBabylon = () => {
@@ -29,38 +27,42 @@ const RoomBuilder = () => {
       const camera = new ArcRotateCamera(
         'camera',
         Math.PI / 2,
-        Math.PI / 4,
+        Math.PI / 3,
         10,
-        new Vector3(0, 1, 0),
+        new Vector3(0, 0.5, 0.5),
         scene
       );
-      camera.lowerRadiusLimit = 5;
-      camera.upperRadiusLimit = 20;
+      camera.lowerRadiusLimit = 1;
+      camera.upperRadiusLimit = 10;
 
       camera.attachControl(canvasRef.current, true);
       cameraRef.current = camera;
 
-      const light = new PointLight('pointLight', new Vector3(0, 5, 0), scene);
+      // const light = new PointLight('pointLight', new Vector3(0, 5, 0), scene);
+      const light = new HemisphericLight('pointLight', new Vector3(0, 5, 0), scene);
 
-      const shadowGenerator = new ShadowGenerator(1024, light);
-      shadowGenerator.useExponentialShadowMap = true;
+      // const shadowGenerator = new ShadowGenerator(1024, light);
+      // shadowGenerator.useExponentialShadowMap = true;
+      // shadowGenerator.bias = 0.001;
+      // shadowGenerator.normalBias = 0.05;
 
-      const box = MeshBuilder.CreateBox('box', { size: 1 }, scene);
-      shadowGenerator.addShadowCaster(box);
+      rooms.items
+        .filter((r) => r.value == room.selectedRoom)
+        .map((r) => {
+          console.log('Room Selected');
+          const selectedRoom = r.room(scene, room.width, room.height);
+          selectedRoom.position.y = -2;
+          // shadowGenerator.addShadowCaster(selectedRoom);
+        });
 
-      const ground = MeshBuilder.CreateGround('ground', { height: 5, width: 5 }, scene);
-      ground.receiveShadows = true;
-      ground.position.y = -0.5;
-
-      const speed = 0.05;
-      const radius = 50;
+      // const speed = 0.05;
+      // const radius = 50;
 
       scene.onBeforeRenderObservable.add(() => {
-        light.position.x = Math.cos(position.current * speed) * radius;
-        light.position.y = Math.sin(position.current * speed) * radius;
-        light.position.z = 0;
-
-        light.setDirectionToTarget(Vector3.Zero());
+        // light.position.x = Math.cos(sunPositionRef.current * speed) * radius;
+        // light.position.y = Math.sin(sunPositionRef.current * speed) * radius;
+        // light.position.z = 0;
+        // light.setDirectionToTarget(Vector3.Zero());
       });
 
       engine.runRenderLoop(() => {
@@ -73,17 +75,16 @@ const RoomBuilder = () => {
     };
 
     initBabylon();
-  }, []);
+  }, [room]);
 
   return (
     <Box height={'100%'} width={'100%'}>
-      <Slider.Root
+      {/* <Slider.Root
         width='200px'
-        defaultValue={[5]}
+        defaultValue={[sunPositionRef.current]}
         min={5}
         max={55}
-        
-        onValueChange={(val) => (position.current = Number(val.value[0]))}
+        onValueChange={(val) => (sunPositionRef.current = Number(val.value[0]))}
       >
         <Slider.Control>
           <Slider.Track>
@@ -91,13 +92,13 @@ const RoomBuilder = () => {
           </Slider.Track>
           <Slider.Thumbs />
         </Slider.Control>
-      </Slider.Root>
+      </Slider.Root> */}
 
       <Box height={'50%'} width={'100%'}>
         <canvas
           ref={canvasRef}
           style={{
-            width: '50%',
+            width: '100%',
             borderRadius: '12px',
             outline: 'none',
           }}
