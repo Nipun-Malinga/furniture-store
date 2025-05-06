@@ -1,6 +1,7 @@
 import chair from "../components/3DModels/Chair";
 import diningTable from "../components/3DModels/diningTable";
 import bed from "../components/3DModels/bed";
+import sofa from "../components/3DModels/sofa";
 
 const data = [
   {
@@ -52,8 +53,8 @@ const data = [
         price: 799.99,
         rating: 4.8,
         ratingCount: 410,
-        model: null,
-        colors: ["#8B4513", "#A0522D"],
+        model: sofa,
+        colors: ['#11603a', '#ca2a2a', '#141f68'],
       },
       {
         productId: 5,
