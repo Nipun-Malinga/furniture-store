@@ -2,6 +2,7 @@ import chair from "../components/3DModels/Chair";
 import diningTable from "../components/3DModels/diningTable";
 import bed from "../components/3DModels/bed";
 import sofa from "../components/3DModels/sofa";
+import bookshelf from "../components/3DModels/bookshelf";
 
 const data = [
   {
@@ -176,6 +177,24 @@ const data = [
         ratingCount: 410,
         model: bed, // 🆕 Linking your imported bed model
         colors: ["#D2B48C", "#8B4513", "#F5F5DC"], // Optional color options
+      },
+    ],
+  },
+  {
+    categoryName: "Storage",
+    categoryId: 4,
+    products: [
+      {
+        productId: 14,
+        name: "Bookshelf",
+        categoryId: 4,
+        categoryName: "Bookshelf",
+        description: "Stylish and functional storage solutions to organize your space with ease and modern appeal.",
+        price: 150.22,
+        rating: 3.9,
+        ratingCount: 350,
+        model: bookshelf, 
+        colors: ['#D2691E', '#CD853F','black'],
       },
     ],
   },
