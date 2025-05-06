@@ -31,7 +31,7 @@ const sofa = (scene) => {
   armRight.parent = parent;
 
 
-  parent.position.y = -1.8;
+  parent.position.y = -1.2;
 
   return parent;
 };
