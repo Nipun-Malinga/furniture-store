@@ -3,6 +3,8 @@ import diningTable from '../components/3DModels/diningTable';
 import bed from '../components/3DModels/bed';
 import sofa from '../components/3DModels/sofa';
 import bookshelf from '../components/3DModels/bookshelf';
+import lamp from "../components/3DModels/lamp";
+import platformBed from "../components/3DModels/bed2";
 
 const data = [
   {
@@ -179,6 +181,18 @@ const data = [
         model: bed, // 🆕 Linking your imported bed model
         colors: ['#D2B48C', '#8B4513', '#F5F5DC'], // Optional color options
       },
+      {
+        productId: 14,
+        name: "Platform Bed",
+        categoryId: 3,
+        categoryName: "Beds",
+        description: "Sleek platform bed with a flat headboard and under-bed drawer.",
+        price: 1099.99,
+        rating: 4.8,
+        ratingCount: 360,
+        model: platformBed, // 🆕 New platform-style bed
+        colors: ["#A0522D", "#DEB887", "#FFF8DC"],
+      },
     ],
   },
   {
@@ -188,6 +202,8 @@ const data = [
       {
         productId: 14,
         name: 'Bookshelf',
+        productId: 15,
+        name: "Bookshelf",
         categoryId: 4,
         categoryName: 'Bookshelf',
         description:
@@ -200,6 +216,25 @@ const data = [
       },
     ],
   },
+  {
+    categoryName: 'Lighting',
+    categoryId: 4,
+    products: [
+      {
+        productId: 16,
+        name: 'Table Lamp',
+        categoryId: 4,
+        categoryName: 'Lighting',
+        description: 'Stylish bedside lamp for ambient lighting.',
+        price: 79.99,
+        rating: 4.4,
+        ratingCount: 140,
+        model: lamp,
+        colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
+      },
+    ],
+  }
+  
 ];
 
 export default data;
