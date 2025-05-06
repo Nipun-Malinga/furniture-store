@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router';
 import FurnitureInfoContainer from './components/FurnitureInfoContainer';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
+import Room from './pages/Room';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             element: <FurnitureInfoContainer />,
           },
         ],
+      },
+      {
+        path: '/room',
+        element: <Room />,
       },
     ],
   },
