@@ -186,7 +186,7 @@ const FurnitureViewer = (props) => {
   }, []);
 
   return (
-    <Box height={'100%'} position={'relative'}>
+    <Box height={'100%'} position={'relative'} overflow={'hidden'}>
       <canvas
         ref={canvasRef}
         style={{

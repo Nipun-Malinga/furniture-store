@@ -8,9 +8,12 @@ const RoomSelector = () => {
   const { setRoom } = useRoom();
 
   return (
-    <Box>
+    <Box width={{ base: '100%', md: 'auto' }}>
       {/* TODO:Add better validations  */}
       <form
+        style={{
+          width: '100%',
+        }}
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target);
@@ -36,7 +39,7 @@ const RoomSelector = () => {
           setRoom(values);
         }}
       >
-        <Fieldset.Root size='lg' maxW='md'>
+        <Fieldset.Root size='lg'>
           <Stack>
             <Fieldset.Legend>Room Creator</Fieldset.Legend>
             <Fieldset.HelperText>Create Your Preferred Room</Fieldset.HelperText>

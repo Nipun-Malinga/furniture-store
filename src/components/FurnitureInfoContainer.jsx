@@ -13,14 +13,19 @@ const FurnitureInfoContainer = (props) => {
   const category = data.filter((category) => category.categoryId == categoryId);
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} height={'100%'} width={'100%'} gap={'5rem'}>
+    <SimpleGrid columns={{ base: 1, md: 2 }} height={'100%'} gap={'0.5rem'} padding={'0.5rem'}>
       {category.map((category, key) => (
         <Fragment key={key}>
-          <GridItem display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
+          <GridItem
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'0.5rem'}
+            justifyContent={'space-between'}
+          >
             {category.products
               .filter((product) => product.productId == productId)
               .map((product, key) => (
-                <Box key={key}>
+                <Box key={key} height={'100%'}>
                   <InfoCard
                     category={product.categoryName}
                     productName={product.name}

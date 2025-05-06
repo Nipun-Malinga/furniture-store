@@ -55,7 +55,7 @@ const RoomBuilder = (props) => {
         .filter((r) => r.value == room.selectedRoom)
         .map((r) => {
           console.log('Room Selected');
-          const selectedRoom = r.room(scene, room.width, room.height);
+          const selectedRoom = r.room(scene, room.width, room.length);
           selectedRoom.position.y = -2;
         });
 
@@ -110,16 +110,14 @@ const RoomBuilder = (props) => {
 
   return (
     <Box height={'100%'} width={'100%'}>
-      <Box height={'50%'} width={'100%'}>
-        <canvas
-          ref={canvasRef}
-          style={{
-            width: '100%',
-            borderRadius: '12px',
-            outline: 'none',
-          }}
-        />
-      </Box>
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: '100%',
+          borderRadius: '12px',
+          outline: 'none',
+        }}
+      />
     </Box>
   );
 };
