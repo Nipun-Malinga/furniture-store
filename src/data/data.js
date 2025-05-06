@@ -1,7 +1,7 @@
 import chair from "../components/3DModels/Chair";
 import diningTable from "../components/3DModels/diningTable";
 import bed from "../components/3DModels/bed";
-
+import tableLamp from "../components/3DModels/tableLamp";
 const data = [
   {
     categoryName: "Seating",
@@ -175,6 +175,25 @@ const data = [
         ratingCount: 410,
         model: bed, // 🆕 Linking your imported bed model
         colors: ["#D2B48C", "#8B4513", "#F5F5DC"], // Optional color options
+      },
+    ],
+  },
+
+  {
+    categoryName: "lighting",
+    categoryId: 4,
+    products: [
+      {
+        productId: 14,
+        name: "Table Lamp",
+        categoryId: 4,
+        categoryName: "lighting",
+        description: "Modern table lamp with dimmer.",
+        price: 199.99,
+        rating: 4.5,
+        ratingCount: 410,
+        model: tableLamp, // 🆕 Linking your imported bed model
+        colors: ["#D2B48C", "#F5F5DC"], // Optional color options
       },
     ],
   },
