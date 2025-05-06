@@ -40,6 +40,8 @@ const squareRoom = (scene, width) => {
   ground.position.y = -0.5;
   ground.parent = parent;
 
+  parent.position.y = -1;
+
   return parent;
 };
 

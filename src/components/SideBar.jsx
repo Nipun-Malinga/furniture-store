@@ -24,6 +24,8 @@ const SideBar = (props) => {
                       if (props.type === 'navigate') {
                         navigate(`/category/${product.categoryId}/product/${product.productId}`);
                       }
+                      product.modelId = Math.round(Math.random() * 100);
+                      console.log(product);
                       setProduct(product);
                     }}
                     variant='outline'

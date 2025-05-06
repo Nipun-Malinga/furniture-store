@@ -1,14 +1,14 @@
 import { MeshBuilder, Mesh } from '@babylonjs/core';
 
-const diningTable = (scene) => {
-  const parent = new Mesh('diningTableParent', scene);
+const diningTable = (scene, name) => {
+  const parent = new Mesh(name ?? 'diningTableParent', scene);
 
   const top = MeshBuilder.CreateBox('tableTop', { width: 4, depth: 2.5, height: 0.2 }, scene);
-  top.position.y = 2; 
+  top.position.y = 2;
   top.parent = parent;
 
   const leg = MeshBuilder.CreateBox('tableLeg', { width: 0.2, depth: 0.2, height: 2 }, scene);
-  leg.position.set(-1.8, 1, -1.1); 
+  leg.position.set(-1.8, 1, -1.1);
   leg.parent = parent;
 
   const leg2 = leg.clone('leg2');
@@ -25,7 +25,7 @@ const diningTable = (scene) => {
   leg4.position.z = 1.1;
   leg4.parent = parent;
 
-  parent.position.y = -2; 
+  parent.position.y = -2;
 
   return parent;
 };
