@@ -12,7 +12,7 @@ const Home = () => {
     <>
       {isDesktop && (
         <GridItem area={'aside'}>
-          <SideBar type={location.pathname == '/room' ? null : 'navigate'} />
+          <SideBar type={'navigate'} />
         </GridItem>
       )}
       <GridItem>{outlet || <Text>Implement A Massage</Text>}</GridItem>

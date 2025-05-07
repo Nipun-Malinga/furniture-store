@@ -22,7 +22,9 @@ const SideBar = (props) => {
                   <Button
                     onClick={() => {
                       if (props.type === 'navigate') {
-                        navigate(`/category/${product.categoryId}/product/${product.productId}`);
+                        navigate(
+                          `category/${product.categoryId}/product/${product.productId}`
+                        );
                       }
                       product.modelId = Math.round(Math.random() * 100);
                       console.log(product);
