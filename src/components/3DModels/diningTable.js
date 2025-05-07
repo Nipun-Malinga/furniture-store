@@ -1,31 +1,59 @@
-import { MeshBuilder, Mesh } from '@babylonjs/core';
+import { MeshBuilder, Mesh, StandardMaterial, Color3, Vector3 } from '@babylonjs/core';
 
-const diningTable = (scene, name) => {
-  const parent = new Mesh(name ?? 'diningTableParent', scene);
+const diningTable = (scene) => {
+  const parent = new Mesh("diningTableParent", scene);
 
-  const top = MeshBuilder.CreateBox('tableTop', { width: 4, depth: 2.5, height: 0.2 }, scene);
-  top.position.y = 2;
-  top.parent = parent;
+  
+  const woodMat = new StandardMaterial("woodMat", scene);
+  
 
-  const leg = MeshBuilder.CreateBox('tableLeg', { width: 0.2, depth: 0.2, height: 2 }, scene);
-  leg.position.set(-1.8, 1, -1.1);
-  leg.parent = parent;
+  
+  const tabletop = MeshBuilder.CreateBox("tabletop", {
+    width: 4,
+    depth: 1.8,
+    height: 0.1
+  }, scene);
+  tabletop.position.y = 1.1;
+  tabletop.material = woodMat;
+  tabletop.parent = parent;
 
-  const leg2 = leg.clone('leg2');
-  leg2.position.z = 1.1;
-  leg2.parent = parent;
+  
+  const legMat = new StandardMaterial("legMat", scene);
+  legMat.diffuseColor = new Color3(0.2, 0.1, 0.05);
 
-  const leg3 = leg.clone('leg3');
-  leg3.position.x = 1.8;
-  leg3.position.z = -1.1;
-  leg3.parent = parent;
+  
+  const createLeg = (name, xPos, scene) => {
+    const legBase = MeshBuilder.CreateBox(name, {
+      width: 0.1,
+      depth: 0.1,
+      height: 1.2,
+    }, scene);
+    legBase.material = legMat;
 
-  const leg4 = leg.clone('leg4');
-  leg4.position.x = 1.8;
-  leg4.position.z = 1.1;
-  leg4.parent = parent;
+    
+    legBase.rotation.z = Math.PI / 6;
+    legBase.position.set(xPos, 0.5, 0.5);
+    legBase.parent = parent;
 
-  parent.position.y = -2;
+    const legMirror = legBase.clone('${name}_mirror');
+    legMirror.rotation.z = -Math.PI / 6;
+    legMirror.position.z = -0.5;
+    legMirror.parent = parent;
+
+    
+    const baseConnector = MeshBuilder.CreateBox('${name}_base', {
+      width: 0.5,
+      depth: 1,
+      height: 0.2,
+    }, scene);
+    baseConnector.material = legMat;
+    baseConnector.position.set(xPos, 0.05, 0);
+    baseConnector.parent = parent;
+  };
+
+  
+  createLeg('legLeft', -1.2, scene);
+  createLeg('legRight', 1.2, scene);
 
   return parent;
 };

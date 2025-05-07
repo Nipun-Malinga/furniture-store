@@ -114,7 +114,7 @@ const data = [
         rating: 4.6,
         ratingCount: 280,
         model: diningTable,
-        colors: ['#DEB887', '#70A48C'],
+        colors: ['#DEB887', '#70A48C','#6A3C0EFF'],
       },
       {
         productId: 8,
