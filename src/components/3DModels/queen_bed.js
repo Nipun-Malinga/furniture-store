@@ -1,7 +1,7 @@
 import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 
-const bed = (scene) => {
-  const parent = new Mesh('bedParent', scene);
+const bed = (scene, name) => {
+  const parent = new Mesh(name ?? 'bedParent', scene);
   const bedDepth = 8;
 
   // 🎨 Materials
@@ -24,18 +24,26 @@ const bed = (scene) => {
   frame.parent = parent;
 
   // 🧱 Mattress
-  const mattress = MeshBuilder.CreateBox('mattress', { width: 5.8, depth: bedDepth - 0.4, height: 0.5 }, scene);
+  const mattress = MeshBuilder.CreateBox(
+    'mattress',
+    { width: 5.8, depth: bedDepth - 0.4, height: 0.5 },
+    scene
+  );
   mattress.position.y = 0.7;
   mattress.material = mattressMat;
   mattress.parent = parent;
 
   // 🌈 Headboard (curved)
-  const headboard = MeshBuilder.CreateCylinder('headboard', {
-    diameter: 6,
-    height: 0.1,
-    tessellation: 20,
-    arc: 0.5,
-  }, scene);
+  const headboard = MeshBuilder.CreateCylinder(
+    'headboard',
+    {
+      diameter: 6,
+      height: 0.1,
+      tessellation: 20,
+      arc: 0.5,
+    },
+    scene
+  );
   headboard.scaling.y = 4;
   headboard.rotation.x = Math.PI / 2;
   headboard.position.y = 1;
@@ -44,11 +52,15 @@ const bed = (scene) => {
   headboard.parent = parent;
 
   // 🛏️ Duvet/Cover
-  const duvet = MeshBuilder.CreateBox('duvet', {
-    width: 5.6,
-    depth: bedDepth - 1,
-    height: 0.2,
-  }, scene);
+  const duvet = MeshBuilder.CreateBox(
+    'duvet',
+    {
+      width: 5.6,
+      depth: bedDepth - 1,
+      height: 0.2,
+    },
+    scene
+  );
   duvet.position.y = 1.0;
   duvet.position.z = 0.4;
   duvet.material = duvetMat;

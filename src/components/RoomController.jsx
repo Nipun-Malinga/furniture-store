@@ -1,13 +1,15 @@
-import { Box, Slider, VStack, RadioGroup, RatingGroup, HStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Box, Slider, VStack, RadioGroup, RatingGroup, HStack, Button } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import useCoordinatesStore from '../store/useCoordinatesStore';
 import useColorStore from '../store/useColorStore';
+import useProduct from '../store/useProduct';
 
 const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
 
 const RoomController = (props) => {
   const { color} = useColorStore();
   const { setCoordinates } = useCoordinatesStore();
+  const { products, removeProduct } = useProduct();
   const [localCoordinates, setLocalCoordinates] = useState({
     modelId: props.modelId,
     X: 0,
@@ -27,8 +29,22 @@ const RoomController = (props) => {
     setCoordinates(updated); // Sync to global store
   };
 
+  useEffect(() => {
+    console.log(`Product ID: ${props.productId}`);
+    console.log(products);
+  }, [products]);
+
   return (
     <VStack>
+      <Button
+        variant={'ghost'}
+        onClick={() => {
+          removeProduct(props.productId);
+        }}
+      >
+        Delete
+      </Button>
+
       {/* POSITION: X */}
       <span style={{ fontWeight: 'bold' }}>{props.name}</span>
       <Slider.Root

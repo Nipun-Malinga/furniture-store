@@ -3,14 +3,12 @@ import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 const stool = (scene, name) => {
   const parent = new Mesh(name ?? 'stoolParent', scene);
 
-  // 🎨 Materials
   const cushionMat = new StandardMaterial('cushionMat', scene);
-  cushionMat.diffuseColor = new Color3(0.85, 0.85, 0.9); // light cushion top
+  cushionMat.diffuseColor = new Color3(0.85, 0.85, 0.9); 
 
   const metalMat = new StandardMaterial('metalMat', scene);
-  metalMat.diffuseColor = new Color3(0.4, 0.4, 0.4); // dark gray for legs
+  metalMat.diffuseColor = new Color3(0.4, 0.4, 0.4); 
 
-  // 🪑 Circular Cushion Seat
   const seat = MeshBuilder.CreateCylinder('seat', {
     diameter: 2.18,
     height: 0.25,
@@ -20,7 +18,6 @@ const stool = (scene, name) => {
   seat.material = cushionMat;
   seat.parent = parent;
 
-  // 🦵 Legs (slightly longer and outward)
   const legHeight = 0.9;
   const leg1 = MeshBuilder.CreateBox('leg1', { width: 0.15, depth: 0.15, height: legHeight }, scene);
   leg1.position.set(-0.7, legHeight / 2, -0.7);
@@ -40,8 +37,6 @@ const stool = (scene, name) => {
   leg4.position.x = 0.7;
   leg4.position.z = 0.7;
   leg4.parent = parent;
-
-  
 
   return parent;
 };
