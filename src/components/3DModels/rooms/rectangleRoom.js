@@ -42,6 +42,9 @@ const rectangleRoom = (scene, width, length) => {
   const ground = MeshBuilder.CreateGround('ground', { width, height: length }, scene);
   ground.receiveShadows = true;
   ground.position.y = -0.5;
+  ground.parent = parent;
+
+  parent.position.y = -1;
 
   return parent;
 };

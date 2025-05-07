@@ -31,6 +31,7 @@ const InfoCard = (props) => {
       justifyContent={'center'}
       rowGap={'2rem'}
       alignItems={'start'}
+      padding={'0.5rem'}
     >
       <Breadcrumb.Root>
         <Breadcrumb.List>
@@ -64,9 +65,9 @@ const InfoCard = (props) => {
             </Text>
           </HStack>
         </HStack>
+      <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
       </VStack>
 
-      <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
 
       <RadioGroup.Root
         defaultValue={color}
@@ -91,10 +92,10 @@ const InfoCard = (props) => {
               ))}
         </HStack>
       </RadioGroup.Root>
-      <Button background={'#3AA39F'}>Download</Button>
+      {/* <Button background={'#3AA39F'}>Download</Button> */}
 
       {/*TODO: Implement Save Changes */}
-      <HStack color={'#3AA39F'} fontWeight={'medium'}>
+      {/* <HStack color={'#3AA39F'} fontWeight={'medium'}>
         <FaHeart
           size={20}
           onClick={() => setLiked(!liked)}
@@ -106,7 +107,7 @@ const InfoCard = (props) => {
           }}
         />
         Save Changes
-      </HStack>
+      </HStack> */}
     </VStack>
   );
 };

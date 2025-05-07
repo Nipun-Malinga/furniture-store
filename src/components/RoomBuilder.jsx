@@ -3,19 +3,30 @@ import {
   Engine,
   HemisphericLight,
   Scene,
-  // ShadowGenerator,
-  Vector3
+  Vector3,
+  StandardMaterial,
+  Color3,
 } from '@babylonjs/core';
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import rooms from '../data/rooms';
 import useRoom from '../store/useRoom';
+import useProduct from '../store/useProduct';
+import useCoordinatesStore from '../store/useCoordinatesStore';
 
 const RoomBuilder = (props) => {
+  const { room } = useRoom();
+  const { products } = useProduct();
+  const { coordinates } = useCoordinatesStore();
+
+  const createdMeshesRef = useRef([new Set()]);
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
-  const sunPositionRef = useRef(30);
-  const { room } = useRoom();
+  const productsRef = useRef();
+
+  useEffect(() => {
+    productsRef.current = coordinates;
+  }, [coordinates]);
 
   useEffect(() => {
     const initBabylon = () => {
@@ -29,7 +40,7 @@ const RoomBuilder = (props) => {
         Math.PI / 2,
         Math.PI / 3,
         10,
-        new Vector3(0, 0.5, 0.5),
+        new Vector3(0, -2, 0.5),
         scene
       );
       camera.lowerRadiusLimit = 1;
@@ -38,31 +49,47 @@ const RoomBuilder = (props) => {
       camera.attachControl(canvasRef.current, true);
       cameraRef.current = camera;
 
-      // const light = new PointLight('pointLight', new Vector3(0, 5, 0), scene);
-      const light = new HemisphericLight('pointLight', new Vector3(0, 5, 0), scene);
-
-      // const shadowGenerator = new ShadowGenerator(1024, light);
-      // shadowGenerator.useExponentialShadowMap = true;
-      // shadowGenerator.bias = 0.001;
-      // shadowGenerator.normalBias = 0.05;
+      const light = new HemisphericLight('hemisphericLight', new Vector3(0, 5, 10), scene);
 
       rooms.items
         .filter((r) => r.value == room.selectedRoom)
         .map((r) => {
           console.log('Room Selected');
-          const selectedRoom = r.room(scene, room.width, room.height);
+          const selectedRoom = r.room(scene, room.width, room.length);
           selectedRoom.position.y = -2;
-          // shadowGenerator.addShadowCaster(selectedRoom);
         });
 
-      // const speed = 0.05;
-      // const radius = 50;
+      products.map((product) => {
+        product.model(scene, product.modelId ?? null);
+      });
 
       scene.onBeforeRenderObservable.add(() => {
-        // light.position.x = Math.cos(sunPositionRef.current * speed) * radius;
-        // light.position.y = Math.sin(sunPositionRef.current * speed) * radius;
-        // light.position.z = 0;
-        // light.setDirectionToTarget(Vector3.Zero());
+        productsRef.current.forEach(({ modelId, X, Y, Z, rotation, scale, color }) => {
+          const mesh = scene.getMeshByName(modelId);
+          if (mesh) {
+            mesh.position.set(X, Y, Z);
+            mesh.rotation.y = rotation;
+            mesh.scaling.setAll(scale);
+
+            if (color) {
+              const newColor = Color3.FromHexString(color);
+
+              const applyMaterial = (targetMesh) => {
+                if (!targetMesh.material || !(targetMesh.material instanceof StandardMaterial)) {
+                  const mat = new StandardMaterial(`${modelId}-mat`, scene);
+                  targetMesh.material = mat;
+                }
+                targetMesh.material.diffuseColor = newColor;
+              };
+
+              applyMaterial(mesh);
+
+              mesh.getChildMeshes().forEach((child) => {
+                applyMaterial(child);
+              });
+            }
+          }
+        });
       });
 
       engine.runRenderLoop(() => {
@@ -72,38 +99,25 @@ const RoomBuilder = (props) => {
       window.addEventListener('resize', () => {
         engine.resize();
       });
+
+      return () => {
+        engine.dispose();
+      };
     };
 
     initBabylon();
-  }, [room]);
+  }, [room, products]);
 
   return (
     <Box height={'100%'} width={'100%'}>
-      {/* <Slider.Root
-        width='200px'
-        defaultValue={[sunPositionRef.current]}
-        min={5}
-        max={55}
-        onValueChange={(val) => (sunPositionRef.current = Number(val.value[0]))}
-      >
-        <Slider.Control>
-          <Slider.Track>
-            <Slider.Range />
-          </Slider.Track>
-          <Slider.Thumbs />
-        </Slider.Control>
-      </Slider.Root> */}
-
-      <Box height={'50%'} width={'100%'}>
-        <canvas
-          ref={canvasRef}
-          style={{
-            width: '100%',
-            borderRadius: '12px',
-            outline: 'none',
-          }}
-        />
-      </Box>
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: '100%',
+          borderRadius: '12px',
+          outline: 'none',
+        }}
+      />
     </Box>
   );
 };

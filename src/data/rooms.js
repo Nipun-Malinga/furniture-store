@@ -15,7 +15,7 @@ const rooms = createListCollection({
       value: 'rectangle',
       room: rectangleRoom,
       dimensions: [
-        { name: 'Height', value: 'height', default: 60 },
+        { name: 'Length', value: 'length', default: 60 },
         { name: 'Width', value: 'width', default: 5 },
       ],
     },
