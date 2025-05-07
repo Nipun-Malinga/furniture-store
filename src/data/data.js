@@ -1,10 +1,13 @@
 import chair from '../components/3DModels/Chair';
 import diningTable from '../components/3DModels/diningTable';
-import bed from '../components/3DModels/bed';
+import bed from '../components/3DModels/queen_bed';
 import sofa from '../components/3DModels/sofa';
 import bookshelf from '../components/3DModels/bookshelf';
 import lamp from "../components/3DModels/lamp";
-import platformBed from "../components/3DModels/bed2";
+import platformBed from "../components/3DModels/platform_bed";
+import armChair from '../components/3DModels/arm_chair';
+import diningChair from '../components/3DModels/dining_chair';
+import loungeChair from '../components/3DModels/lounge_chair';
 
 const data = [
   {
@@ -21,7 +24,7 @@ const data = [
         price: 299.99,
         rating: 4.5,
         ratingCount: 245,
-        model: chair,
+        model: armChair,
         colors: ['#FFD700', '#FFA500', '#33ecff'],
       },
       {
@@ -33,7 +36,7 @@ const data = [
         price: 149.99,
         rating: 4.2,
         ratingCount: 180,
-        model: chair,
+        model: diningChair,
         colors: ['#DAA520', '#B8860B'],
       },
       {
@@ -45,7 +48,7 @@ const data = [
         price: 349.99,
         rating: 4.7,
         ratingCount: 320,
-        model: chair,
+        model: loungeChair,
         colors: ['#F4A460', '#D2B48C'],
       },
       {
