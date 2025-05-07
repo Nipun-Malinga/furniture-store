@@ -9,6 +9,7 @@ import diningChair from '../components/3DModels/dining_chair';
 import loungeChair from '../components/3DModels/lounge_chair';
 import stool from '../components/3DModels/stool';
 import bench from '../components/3DModels/bench';
+import CoffeeTable from '../components/3DModels/coffee_table';
 
 const data = [
   {
@@ -115,7 +116,7 @@ const data = [
         price: 249.99,
         rating: 4.4,
         ratingCount: 200,
-        model: null,
+        model: CoffeeTable,
         colors: ['#BC8F8F', '#CD853F'],
       },
       {
