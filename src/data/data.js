@@ -31,6 +31,7 @@ const data = [
       {
         productId: 2,
         name: 'Dining Chair',
+        modelId: null,
         categoryId: 1,
         categoryName: 'Seating',
         description: 'Elegant dining chair for modern dining spaces.',
@@ -43,6 +44,7 @@ const data = [
       {
         productId: 3,
         name: 'Lounge Chair',
+        modelId: null,
         categoryId: 1,
         categoryName: 'Seating',
         description: 'Relaxing lounge chair for your leisure time.',
@@ -55,6 +57,7 @@ const data = [
       {
         productId: 4,
         name: 'Sofa',
+        modelId: null,
         categoryId: 1,
         categoryName: 'Seating',
         description: 'Spacious and comfortable sofa for family rooms.',
@@ -67,6 +70,7 @@ const data = [
       {
         productId: 5,
         name: 'Stool',
+        modelId: null,
         categoryId: 1,
         categoryName: 'Seating',
         description: 'Compact stool for versatile use.',
@@ -79,6 +83,7 @@ const data = [
       {
         productId: 6,
         name: 'Bench',
+        modelId: null,
         categoryId: 1,
         categoryName: 'Seating',
         description: 'Simple wooden bench ideal for entryways.',
@@ -97,6 +102,7 @@ const data = [
       {
         productId: 7,
         name: 'Dining Table',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Sturdy dining table with a timeless design.',
@@ -109,6 +115,7 @@ const data = [
       {
         productId: 8,
         name: 'Coffee Table',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Modern coffee table for living room setups.',
@@ -121,6 +128,7 @@ const data = [
       {
         productId: 9,
         name: 'Side Table',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Minimalistic side table for small spaces.',
@@ -133,6 +141,7 @@ const data = [
       {
         productId: 10,
         name: 'Console Table',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Stylish console table for hallways and entryways.',
@@ -145,6 +154,7 @@ const data = [
       {
         productId: 11,
         name: 'Desk',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Functional desk for home offices and studies.',
@@ -157,6 +167,7 @@ const data = [
       {
         productId: 12,
         name: 'Nightstand',
+        modelId: null,
         categoryId: 2,
         categoryName: 'Tables',
         description: 'Practical nightstand with storage.',
@@ -175,6 +186,7 @@ const data = [
       {
         productId: 13,
         name: 'Queen Bed',
+        modelId: null,
         categoryId: 3,
         categoryName: 'Beds',
         description: 'Modern queen-size bed with headboard and sturdy frame.',
@@ -186,15 +198,16 @@ const data = [
       },
       {
         productId: 14,
-        name: "Platform Bed",
+        name: 'Platform Bed',
+        modelId: null,
         categoryId: 3,
-        categoryName: "Beds",
-        description: "Sleek platform bed with a flat headboard and under-bed drawer.",
+        categoryName: 'Beds',
+        description: 'Sleek platform bed with a flat headboard and under-bed drawer.',
         price: 1099.99,
         rating: 4.8,
         ratingCount: 360,
         model: platformBed,
-        colors: ["#A0522D", "#DEB887", "#FFF8DC"],
+        colors: ['#A0522D', '#DEB887', '#FFF8DC'],
       },
     ],
   },
@@ -204,10 +217,12 @@ const data = [
     products: [
       {
         productId: 15,
-        name: "Bookshelf",
+        name: 'Bookshelf',
+        modelId: null,
         categoryId: 4,
         categoryName: 'Storage',
-        description: 'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
+        description:
+          'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
         price: 150.22,
         rating: 3.9,
         ratingCount: 350,
@@ -223,6 +238,7 @@ const data = [
       {
         productId: 16,
         name: 'Table Lamp',
+        modelId: null,
         categoryId: 5,
         categoryName: 'Lighting',
         description: 'Stylish bedside lamp for ambient lighting.',
