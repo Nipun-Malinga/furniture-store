@@ -6,22 +6,25 @@ import {
   Vector3,
   StandardMaterial,
   Color3,
+  Tools,
 } from '@babylonjs/core';
-import { Box } from '@chakra-ui/react';
+import { Box, Button, HStack } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import rooms from '../data/rooms';
 import useRoom from '../store/useRoom';
 import useProduct from '../store/useProduct';
 import useCoordinatesStore from '../store/useCoordinatesStore';
+import { IoIosSave } from 'react-icons/io';
+import { RiScreenshot2Fill } from 'react-icons/ri';
 
-const RoomBuilder = (props) => {
+const RoomBuilder = () => {
   const { room } = useRoom();
   const { products } = useProduct();
   const { coordinates } = useCoordinatesStore();
 
-  const createdMeshesRef = useRef([new Set()]);
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
+  const engineRef = useRef(null);
   const productsRef = useRef();
 
   useEffect(() => {
@@ -35,12 +38,14 @@ const RoomBuilder = (props) => {
       const engine = new Engine(canvasRef.current, true);
       const scene = new Scene(engine);
 
+      engineRef.current = engine;
+
       const camera = new ArcRotateCamera(
         'camera',
         Math.PI / 2,
         Math.PI / 3,
         10,
-        new Vector3(0, -2, 0.5),
+        new Vector3(0, -2, 0),
         scene
       );
       camera.lowerRadiusLimit = 1;
@@ -108,8 +113,20 @@ const RoomBuilder = (props) => {
     initBabylon();
   }, [room, products]);
 
+  const takeScreenshot = (engineRef, cameraRef) => {
+    Tools.CreateScreenshotUsingRenderTarget(engineRef, cameraRef, { width: 1920, height: 1080 });
+  };
+
   return (
-    <Box height={'100%'} width={'100%'}>
+    <Box position={'relative'} height={'100%'} width={'100%'}>
+      <HStack position={'absolute'}>
+        <Button>
+          <IoIosSave />
+        </Button>
+        <Button onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}>
+          <RiScreenshot2Fill />
+        </Button>
+      </HStack>
       <canvas
         ref={canvasRef}
         style={{
