@@ -14,7 +14,7 @@ const RoomBuilderContainer = () => {
       <Flex
         direction={{ base: 'column-reverse', md: 'row' }}
         alignItems={{ base: 'center', md: 'start' }}
-        justifyContent={'flex-end'}
+        justifyContent={'center'}
         height={'100%'}
         width={'100%'}
         gap={'0.5rem'}
