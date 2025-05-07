@@ -1,7 +1,7 @@
 import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 
-const platformBed = (scene) => {
-  const parent = new Mesh('platformBedParent', scene);
+const platformBed = (scene, name) => {
+  const parent = new Mesh(name ?? 'platformBedParent', scene);
   const bedDepth = 7.5;
 
   // 🎨 Materials

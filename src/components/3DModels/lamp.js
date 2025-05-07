@@ -1,7 +1,7 @@
 import { MeshBuilder, Mesh } from '@babylonjs/core';
 
-const lamp = (scene) => {
-  const parent = new Mesh('lampParent', scene);
+const lamp = (scene, name) => {
+  const parent = new Mesh(name ?? 'lampParent', scene);
 
   // Base of the lamp
   const base = MeshBuilder.CreateCylinder('base', { diameter: 1, height: 0.2 }, scene);
@@ -14,11 +14,15 @@ const lamp = (scene) => {
   stand.parent = parent;
 
   // Lamp shade (top part)
-  const shade = MeshBuilder.CreateCylinder('shade', {
-    diameterTop: 1.2,
-    diameterBottom: 0.8,
-    height: 1,
-  }, scene);
+  const shade = MeshBuilder.CreateCylinder(
+    'shade',
+    {
+      diameterTop: 1.2,
+      diameterBottom: 0.8,
+      height: 1,
+    },
+    scene
+  );
   shade.position.y = 2.2;
   shade.parent = parent;
 

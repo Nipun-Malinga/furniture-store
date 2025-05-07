@@ -1,9 +1,8 @@
 import { MeshBuilder, Mesh, Curve3, Path3D, TubeBuilder, Vector3 } from '@babylonjs/core';
 
-const modernReadingLight = (scene) => {
-  const lampParent = new Mesh('modernReadingLamp', scene);
+const modernReadingLight = (scene, name) => {
+  const lampParent = new Mesh(name ?? 'modernReadingLamp', scene);
 
-  // Base: flat and circular
   const base = MeshBuilder.CreateCylinder('lampBase', {
     diameter: 1.5,
     height: 0.1
@@ -11,7 +10,6 @@ const modernReadingLight = (scene) => {
   base.position.y = 0.05;
   base.parent = lampParent;
 
-  // Vertical stand
   const stand = MeshBuilder.CreateCylinder('lampStand', {
     diameter: 0.1,
     height: 4
@@ -19,7 +17,7 @@ const modernReadingLight = (scene) => {
   stand.position.y = 2.1;
   stand.parent = lampParent;
 
-  // Curved neck (tube path)
+
   const curvePoints = [
     new Vector3(0, 4, 0),
     new Vector3(0.2, 4.3, 0.2),
@@ -33,7 +31,6 @@ const modernReadingLight = (scene) => {
   }, scene);
   neck.parent = lampParent;
 
-  // Head (spotlight-style)
   const head = MeshBuilder.CreateCylinder('lampHead', {
     diameterTop: 0.2,
     diameterBottom: 0.4,
