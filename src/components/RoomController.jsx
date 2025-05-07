@@ -1,18 +1,10 @@
-import {
-  Box,
-  Slider,
-  VStack,
-  RadioGroup,
-  RatingGroup,
-  HStack,
-  Button,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import useCoordinatesStore from "../store/useCoordinatesStore";
-import useColorStore from "../store/useColorStore";
-import useProduct from "../store/useProduct";
+import { Box, Slider, VStack, RadioGroup, RatingGroup, HStack, Button } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import useCoordinatesStore from '../store/useCoordinatesStore';
+import useColorStore from '../store/useColorStore';
+import useProduct from '../store/useProduct';
 
-const colors = ["#F56565", "#48BB78", "#4299E1", "#9F7AEA"];
+const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
 
 const RoomController = (props) => {
   const { color } = useColorStore();
@@ -20,6 +12,8 @@ const RoomController = (props) => {
   const { products, removeProduct } = useProduct();
   const [localCoordinates, setLocalCoordinates] = useState({
     modelId: props.modelId,
+    productId: props.productId,
+    categoryId: props.categoryId,
     X: 0,
     Y: -2,
     Z: 0,
@@ -45,9 +39,9 @@ const RoomController = (props) => {
   return (
     <VStack>
       <Button
-        bg="red.500"
-        color="white"
-        _hover={{ bg: "red.600" }}
+        bg='red.500'
+        color='white'
+        _hover={{ bg: 'red.600' }}
         onClick={() => {
           removeProduct(props.productId);
         }}
@@ -56,13 +50,13 @@ const RoomController = (props) => {
       </Button>
 
       {/* POSITION: X */}
-      <span style={{ fontWeight: "bold" }}>{props.name}</span>
+      <span style={{ fontWeight: 'bold' }}>{props.name}</span>
       <Slider.Root
-        width="200px"
+        width='200px'
         min={-20}
         max={20}
         defaultValue={[0]}
-        onValueChange={(val) => handleChange("X", val.value[0] * 0.2)}
+        onValueChange={(val) => handleChange('X', val.value[0] * 0.2)}
       >
         <span>Left-Wright</span>
         <Slider.Control>
@@ -75,11 +69,11 @@ const RoomController = (props) => {
 
       {/* POSITION: Y */}
       <Slider.Root
-        width="200px"
+        width='200px'
         min={-100}
         max={100}
         defaultValue={[2]}
-        onValueChange={(val) => handleChange("Y", val.value[0] * 0.05)}
+        onValueChange={(val) => handleChange('Y', val.value[0] * 0.05)}
       >
         <span>Up and Down</span>
         <Slider.Control>
@@ -92,11 +86,11 @@ const RoomController = (props) => {
 
       {/* POSITION: Z */}
       <Slider.Root
-        width="200px"
+        width='200px'
         min={-20}
         max={20}
         defaultValue={[0]}
-        onValueChange={(val) => handleChange("Z", val.value[0] * 0.2)}
+        onValueChange={(val) => handleChange('Z', val.value[0] * 0.2)}
       >
         <span>Forward-Backward</span>
         <Slider.Control>
@@ -109,11 +103,11 @@ const RoomController = (props) => {
 
       {/* ROTATION: Y Axis */}
       <Slider.Root
-        width="200px"
+        width='200px'
         min={-20}
         max={20}
         defaultValue={[0]}
-        onValueChange={(val) => handleChange("rotation", val.value[0] * 0.2)}
+        onValueChange={(val) => handleChange('rotation', val.value[0] * 0.2)}
       >
         <span>Rotation</span>
         <Slider.Control>
@@ -126,11 +120,11 @@ const RoomController = (props) => {
 
       {/* SCALE: X, Y, X */}
       <Slider.Root
-        width="200px"
+        width='200px'
         min={0.1}
         max={10}
         defaultValue={[10]}
-        onValueChange={(val) => handleChange("scale", val.value[0] * 0.1)}
+        onValueChange={(val) => handleChange('scale', val.value[0] * 0.1)}
       >
         <span>Size</span>
         <Slider.Control>
@@ -144,10 +138,10 @@ const RoomController = (props) => {
       <RadioGroup.Root
         defaultValue={color}
         onValueChange={(value) => {
-          handleChange("color", value.value);
+          handleChange('color', value.value);
         }}
       >
-        <HStack gap="6">
+        <HStack gap='6'>
           {props.colors
             ? props.colors.map((color, key) => (
                 <RadioGroup.Item key={key} value={color}>

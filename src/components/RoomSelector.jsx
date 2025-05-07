@@ -1,11 +1,69 @@
-import { Box, Button, Field, Fieldset, Input, Portal, Select, Stack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Box, Button, Field, Fieldset, Input, Portal, Select, Stack, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import data from '../data/data';
 import rooms from '../data/rooms';
 import useRoom from '../store/useRoom';
+import useProduct from '../store/useProduct';
+import useCoordinatesStore from '../store/useCoordinatesStore';
 
 const RoomSelector = () => {
   const [selectedRoom, setSelectedRoom] = useState();
   const { setRoom } = useRoom();
+  const { products, setProduct } = useProduct();
+  const { coordinates, setCoordinates } = useCoordinatesStore();
+
+  useEffect(() => {
+    console.log(coordinates);
+  }, [coordinates]);
+
+  const savedLayouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+
+  const handleSubmit = (design) => {
+    const room = design.find((model) => model.modelType == 'room');
+    setRoom({
+      selectedRoom: room.model.name,
+      width: room.model.width,
+      length: room.model.length,
+    });
+
+    const savedMeshes = design.filter((model) => model.modelType === 'mesh');
+
+    const matchedModels = savedMeshes.map((mesh) => {
+      const category = data.find((c) => c.categoryId === mesh.categoryId);
+      if (!category) return null;
+
+      const product = category.products.find((p) => p.productId === mesh.productId);
+      if (!product) return null;
+
+      const enrichedProduct = {
+        ...product,
+        modelId: mesh.name,
+        position: mesh.position,
+        rotation: mesh.rotation,
+        scale: mesh.scale,
+        color: mesh.color,
+      };
+
+      return {
+        ...mesh,
+        productData: enrichedProduct,
+      };
+    });
+
+    console.log(matchedModels);
+
+    const models = matchedModels
+      .filter((model) => model.productData)
+      .map((model) => model.productData);
+
+    models.forEach((product) => {
+      setProduct(product);
+    });
+
+    matchedModels.map((model) => {
+      setCoordinates(model);
+    });
+  };
 
   return (
     <Box width={{ base: '100%', md: 'auto' }}>
@@ -94,6 +152,17 @@ const RoomSelector = () => {
           </Button>
         </Fieldset.Root>
       </form>
+
+      {savedLayouts.map((layout, key) => (
+        <Text
+          key={key}
+          onClick={() => {
+            handleSubmit(layout.design);
+          }}
+        >
+          {layout.designName}
+        </Text>
+      ))}
     </Box>
   );
 };

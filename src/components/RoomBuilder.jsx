@@ -1,34 +1,59 @@
 import {
   ArcRotateCamera,
+  Color3,
   Engine,
   HemisphericLight,
   Scene,
-  Vector3,
   StandardMaterial,
-  Color3,
   Tools,
+  Vector3
 } from '@babylonjs/core';
-import { Box, Button, HStack } from '@chakra-ui/react';
-import React, { useEffect, useRef } from 'react';
-import rooms from '../data/rooms';
-import useRoom from '../store/useRoom';
-import useProduct from '../store/useProduct';
-import useCoordinatesStore from '../store/useCoordinatesStore';
+import { Box, Button, CloseButton, Dialog, HStack, Input, Portal } from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoIosSave } from 'react-icons/io';
 import { RiScreenshot2Fill } from 'react-icons/ri';
+import rooms from '../data/rooms';
+import useCoordinatesStore from '../store/useCoordinatesStore';
+import useProduct from '../store/useProduct';
+import useRoom from '../store/useRoom';
 
 const RoomBuilder = () => {
   const { room } = useRoom();
   const { products } = useProduct();
   const { coordinates } = useCoordinatesStore();
+  const [savedDesign, setSavedDesign] = useState([]);
+  const [designName, setDesignName] = useState('');
 
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
   const engineRef = useRef(null);
-  const productsRef = useRef();
+  const coordinatesRef = useRef();
+
+  const handleSubmit = () => {
+    if (!localStorage.getItem('savedLayouts')) {
+      localStorage.setItem('savedLayouts', JSON.stringify([]));
+    }
+
+    const layouts = JSON.parse(localStorage.getItem('savedLayouts'));
+
+    const design = {
+      designName,
+      design: savedDesign,
+    };
+
+    const idx = layouts.findIndex((l) => l.designName === design.designName);
+    if (idx !== -1) {
+      layouts[idx] = design;
+    } else {
+      layouts.push(design);
+    }
+
+    localStorage.setItem('savedLayouts', JSON.stringify(layouts));
+    console.log('Saved layouts:', layouts);
+  };
 
   useEffect(() => {
-    productsRef.current = coordinates;
+    coordinatesRef.current = coordinates;
   }, [coordinates]);
 
   useEffect(() => {
@@ -56,45 +81,125 @@ const RoomBuilder = () => {
 
       const light = new HemisphericLight('hemisphericLight', new Vector3(0, 5, 10), scene);
 
-      rooms.items
-        .filter((r) => r.value == room.selectedRoom)
-        .map((r) => {
-          console.log('Room Selected');
-          const selectedRoom = r.room(scene, room.width, room.length);
-          selectedRoom.position.y = -2;
-        });
+      room &&
+        rooms.items
+          .filter((r) => r.value == room.selectedRoom)
+          .map((r) => {
+            console.log('Room Selected');
+            const selectedRoom = r.room(scene, room.width, room.length);
+            selectedRoom.position.y = -2;
+            setSavedDesign([
+              {
+                modelType: 'room',
+                model: {
+                  name: r.value,
+                  width: room.width,
+                  length: room.length,
+                  position: {
+                    x: selectedRoom.position.x,
+                    y: selectedRoom.position.y,
+                    z: selectedRoom.position.z,
+                  },
+                  scale: selectedRoom.scaling.x,
+                },
+              },
+            ]);
+          });
 
-      products.map((product) => {
-        product.model(scene, product.modelId ?? null);
-      });
+      products &&
+        products.forEach((product) => {
+          console.log(product);
+          if (typeof product.model !== 'function') {
+            console.warn(`Invalid model function for product:`, product);
+            return;
+          }
 
-      scene.onBeforeRenderObservable.add(() => {
-        productsRef.current.forEach(({ modelId, X, Y, Z, rotation, scale, color }) => {
-          const mesh = scene.getMeshByName(modelId);
-          if (mesh) {
-            mesh.position.set(X, Y, Z);
-            mesh.rotation.y = rotation;
-            mesh.scaling.setAll(scale);
+          const model = product.model(scene, product.modelId ?? null);
 
-            if (color) {
-              const newColor = Color3.FromHexString(color);
+          if (!model) {
+            console.warn(`Failed to create model for product:`, product);
+            return;
+          }
 
-              const applyMaterial = (targetMesh) => {
-                if (!targetMesh.material || !(targetMesh.material instanceof StandardMaterial)) {
-                  const mat = new StandardMaterial(`${modelId}-mat`, scene);
-                  targetMesh.material = mat;
+          if (product.position) {
+            model.position.set(product.position.x, product.position.y, product.position.z);
+          }
+
+          if (product.rotation !== undefined) {
+            model.rotation.y = product.rotation;
+          }
+
+          if (product.scale !== undefined) {
+            model.scaling.setAll(product.scale);
+          }
+
+          if (product.color) {
+            try {
+              const color3 = Color3.FromHexString(product.color);
+              const children = model.getChildMeshes();
+              children.forEach((child) => {
+                if (child.material && child.material.diffuseColor) {
+                  child.material.diffuseColor = color3;
                 }
-                targetMesh.material.diffuseColor = newColor;
-              };
-
-              applyMaterial(mesh);
-
-              mesh.getChildMeshes().forEach((child) => {
-                applyMaterial(child);
               });
+            } catch (err) {
+              console.warn(`Invalid color string: ${product.color}`);
             }
           }
         });
+
+      scene.onBeforeRenderObservable.add(() => {
+        coordinatesRef.current.forEach(
+          ({ modelId, productId, categoryId, X, Y, Z, rotation, scale, color }) => {
+            const mesh = scene.getMeshByName(modelId);
+            if (mesh) {
+              mesh.position.set(X, Y, Z);
+              mesh.rotation.y = rotation;
+              mesh.scaling.setAll(scale);
+
+              if (color) {
+                const newColor = Color3.FromHexString(color);
+
+                const applyMaterial = (targetMesh) => {
+                  if (!targetMesh.material || !(targetMesh.material instanceof StandardMaterial)) {
+                    const mat = new StandardMaterial(`${modelId}-mat`, scene);
+                    targetMesh.material = mat;
+                  }
+                  targetMesh.material.diffuseColor = newColor;
+                };
+
+                applyMaterial(mesh);
+
+                mesh.getChildMeshes().forEach((child) => {
+                  applyMaterial(child);
+                });
+              }
+
+              setSavedDesign((prevDesigns) => {
+                const updatedDesigns = [...prevDesigns];
+                const existingIndex = updatedDesigns.findIndex((item) => item.name === modelId);
+
+                const serializedMesh = {
+                  name: modelId,
+                  modelType: 'mesh',
+                  productId: productId,
+                  categoryId: categoryId,
+                  position: { x: X, y: Y, z: Z },
+                  rotation,
+                  scale,
+                  color,
+                };
+
+                if (existingIndex !== -1) {
+                  updatedDesigns[existingIndex] = serializedMesh;
+                } else {
+                  updatedDesigns.push(serializedMesh);
+                }
+                return updatedDesigns;
+              });
+            }
+          }
+        );
       });
 
       engine.runRenderLoop(() => {
@@ -120,9 +225,45 @@ const RoomBuilder = () => {
   return (
     <Box position={'relative'} height={'100%'} width={'100%'}>
       <HStack position={'absolute'}>
-        <Button>
-          <IoIosSave />
-        </Button>
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <Button size='sm'>
+              <IoIosSave />
+            </Button>
+          </Dialog.Trigger>
+          <Portal>
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+              <Dialog.Content>
+                <Dialog.Header>
+                  <Dialog.Title>Save Layout</Dialog.Title>
+                </Dialog.Header>
+                <Dialog.Body>
+                  <Input
+                    placeholder='Enter Layout Name'
+                    size='sm'
+                    value={designName}
+                    onChange={(e) => setDesignName(e.target.value)}
+                  />
+                </Dialog.Body>
+                <Dialog.Footer>
+                  <Dialog.ActionTrigger asChild>
+                    <Button variant='outline'>Cancel</Button>
+                  </Dialog.ActionTrigger>
+                  <Dialog.ActionTrigger asChild>
+                    <Button mt={3} size='sm' colorScheme='blue' onClick={handleSubmit}>
+                      Save
+                    </Button>
+                  </Dialog.ActionTrigger>
+                </Dialog.Footer>
+                <Dialog.CloseTrigger asChild>
+                  <CloseButton size='sm' />
+                </Dialog.CloseTrigger>
+              </Dialog.Content>
+            </Dialog.Positioner>
+          </Portal>
+        </Dialog.Root>
+
         <Button onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}>
           <RiScreenshot2Fill />
         </Button>

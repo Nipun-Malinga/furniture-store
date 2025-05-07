@@ -12,9 +12,10 @@ const RoomControllerContainer = () => {
         <RoomController
           key={key}
           modelId={product.modelId}
-          colors={product.colors}
           productId={product.productId}
+          categoryId={product.categoryId}
           name={product.name}
+          colors={product.colors}
         />
       ))}
     </HStack>
