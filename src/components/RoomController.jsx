@@ -43,7 +43,7 @@ const RoomController = (props) => {
         color='white'
         _hover={{ bg: 'red.600' }}
         onClick={() => {
-          removeProduct(props.productId);
+          removeProduct(props.modelId);
         }}
       >
         Delete

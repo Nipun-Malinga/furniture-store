@@ -19,7 +19,12 @@ const RoomBuilderContainer = () => {
         width={'100%'}
         gap={'0.5rem'}
       >
-        {room && <RoomBuilder />}
+        {room && (
+          <HStack width={'100%'} height={'100%'}>
+            <RoomBuilder />
+            <RoomBuilder mode={'2d'} />
+          </HStack>
+        )}
         <RoomSelector />
       </Flex>
 

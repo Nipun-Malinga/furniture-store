@@ -18,7 +18,7 @@ const Layout = () => {
         base: '64px 1fr',
         md: '64px 1fr',
       }}
-      height="100vh"
+      height="100%"
       gap="0.5rem"
     >
       <GridItem area="header" bg="blue.600" zIndex="1000" position="sticky" top="0">

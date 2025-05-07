@@ -7,6 +7,8 @@ import {
   StandardMaterial,
   Tools,
   Vector3,
+  Camera,
+  FreeCamera,
 } from '@babylonjs/core';
 import { Box, Button, CloseButton, Dialog, HStack, Input, Portal } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -17,7 +19,7 @@ import useCoordinatesStore from '../store/useCoordinatesStore';
 import useProduct from '../store/useProduct';
 import useRoom from '../store/useRoom';
 
-const RoomBuilder = () => {
+const RoomBuilder = (props) => {
   const { room } = useRoom();
   const { products } = useProduct();
   const { coordinates } = useCoordinatesStore();
@@ -66,20 +68,38 @@ const RoomBuilder = () => {
       const engine = new Engine(canvasRef.current, true);
       const scene = new Scene(engine);
 
+      sceneRef.current = scene;
       engineRef.current = engine;
 
-      const camera = new ArcRotateCamera(
-        'camera',
-        Math.PI / 2,
-        Math.PI / 3,
-        10,
-        new Vector3(0, -2, 0),
-        scene
-      );
-      camera.lowerRadiusLimit = 1;
-      camera.upperRadiusLimit = 10;
+      let camera;
 
-      camera.attachControl(canvasRef.current, true);
+      if (props.mode === '2d') {
+        camera = new FreeCamera('orthoCamera', new Vector3(0, 5, 0), scene);
+        camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
+
+        const distance = 5;
+        const aspect = engine.getRenderWidth() / engine.getRenderHeight();
+
+        camera.orthoLeft = -distance * aspect;
+        camera.orthoRight = distance * aspect;
+        camera.orthoTop = distance;
+        camera.orthoBottom = -distance;
+
+        camera.setTarget(new Vector3(0, 0, 0));
+      } else {
+        camera = new ArcRotateCamera(
+          'camera',
+          Math.PI / 2,
+          Math.PI / 3,
+          10,
+          new Vector3(0, -2, 0),
+          scene
+        );
+        camera.lowerRadiusLimit = 1;
+        camera.upperRadiusLimit = 10;
+        camera.attachControl(canvasRef.current, true);
+      }
+
       cameraRef.current = camera;
 
       const light = new HemisphericLight('hemisphericLight', new Vector3(0, 5, 10), scene);
@@ -216,9 +236,8 @@ const RoomBuilder = () => {
         scene.render();
       });
 
-      window.addEventListener('resize', () => {
-        engine.resize();
-      });
+      const handleResize = () => engineRef.current?.resize();
+      window.addEventListener('resize', handleResize);
 
       return () => {
         engine.stopRenderLoop();
@@ -284,6 +303,7 @@ const RoomBuilder = () => {
         ref={canvasRef}
         style={{
           width: '100%',
+          height: '28rem',
           borderRadius: '12px',
           outline: 'none',
         }}
