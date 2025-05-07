@@ -6,7 +6,7 @@ import {
   Scene,
   StandardMaterial,
   Tools,
-  Vector3
+  Vector3,
 } from '@babylonjs/core';
 import { Box, Button, CloseButton, Dialog, HStack, Input, Portal } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -26,15 +26,18 @@ const RoomBuilder = () => {
 
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
+  const sceneRef = useRef(null);
   const engineRef = useRef(null);
   const coordinatesRef = useRef();
 
   const handleSubmit = () => {
-    if (!localStorage.getItem('savedLayouts')) {
-      localStorage.setItem('savedLayouts', JSON.stringify([]));
+    if (!designName.trim()) {
+      alert('Please enter a layout name');
+      return;
     }
 
-    const layouts = JSON.parse(localStorage.getItem('savedLayouts'));
+    const savedLayoutsRaw = localStorage.getItem('savedLayouts');
+    const layouts = savedLayoutsRaw ? JSON.parse(savedLayoutsRaw) : [];
 
     const design = {
       designName,
@@ -85,7 +88,6 @@ const RoomBuilder = () => {
         rooms.items
           .filter((r) => r.value == room.selectedRoom)
           .map((r) => {
-            console.log('Room Selected');
             const selectedRoom = r.room(scene, room.width, room.length);
             selectedRoom.position.y = -2;
             setSavedDesign([
@@ -108,7 +110,6 @@ const RoomBuilder = () => {
 
       products &&
         products.forEach((product) => {
-          console.log(product);
           if (typeof product.model !== 'function') {
             console.warn(`Invalid model function for product:`, product);
             return;
@@ -136,14 +137,22 @@ const RoomBuilder = () => {
           if (product.color) {
             try {
               const color3 = Color3.FromHexString(product.color);
-              const children = model.getChildMeshes();
-              children.forEach((child) => {
-                if (child.material && child.material.diffuseColor) {
-                  child.material.diffuseColor = color3;
+
+              const applyMaterial = (mesh) => {
+                if (!mesh.material || !(mesh.material instanceof StandardMaterial)) {
+                  const mat = new StandardMaterial(`${mesh.name}-mat`, mesh.getScene());
+                  mesh.material = mat;
                 }
-              });
+                if (mesh.material instanceof StandardMaterial) {
+                  mesh.material.diffuseColor = color3;
+                }
+              };
+
+              applyMaterial(model);
+
+              model.getChildMeshes().forEach(applyMaterial);
             } catch (err) {
-              console.warn(`Invalid color string: ${product.color}`);
+              console.warn(`Invalid color string: ${product.color}`, err);
             }
           }
         });
@@ -161,11 +170,12 @@ const RoomBuilder = () => {
                 const newColor = Color3.FromHexString(color);
 
                 const applyMaterial = (targetMesh) => {
-                  if (!targetMesh.material || !(targetMesh.material instanceof StandardMaterial)) {
-                    const mat = new StandardMaterial(`${modelId}-mat`, scene);
+                  let mat = targetMesh.material;
+                  if (!(mat instanceof StandardMaterial)) {
+                    mat = new StandardMaterial(`${targetMesh.name}-mat`, scene);
                     targetMesh.material = mat;
                   }
-                  targetMesh.material.diffuseColor = newColor;
+                  mat.diffuseColor = newColor;
                 };
 
                 applyMaterial(mesh);
@@ -211,7 +221,9 @@ const RoomBuilder = () => {
       });
 
       return () => {
+        engine.stopRenderLoop();
         engine.dispose();
+        window.removeEventListener('resize', handleResize);
       };
     };
 
