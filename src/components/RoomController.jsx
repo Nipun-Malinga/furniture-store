@@ -6,7 +6,7 @@ import useColorStore from '../store/useColorStore';
 const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
 
 const RoomController = (props) => {
-  const { color, setColor } = useColorStore();
+  const { color} = useColorStore();
   const { setCoordinates } = useCoordinatesStore();
   const [localCoordinates, setLocalCoordinates] = useState({
     modelId: props.modelId,
@@ -30,13 +30,14 @@ const RoomController = (props) => {
   return (
     <VStack>
       {/* POSITION: X */}
+      <span style={{ fontWeight: 'bold' }}>{props.name}</span>
       <Slider.Root
         width='200px'
         min={-20}
         max={20}
         defaultValue={[0]}
         onValueChange={(val) => handleChange('X', val.value[0] * 0.2)}
-      >
+      ><span>Left-Wright</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -52,7 +53,7 @@ const RoomController = (props) => {
         max={100}
         defaultValue={[2]}
         onValueChange={(val) => handleChange('Y', val.value[0] * 0.05)}
-      >
+      ><span>Up and Down</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -68,7 +69,7 @@ const RoomController = (props) => {
         max={20}
         defaultValue={[0]}
         onValueChange={(val) => handleChange('Z', val.value[0] * 0.2)}
-      >
+      ><span>Forward-Backward</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -84,7 +85,7 @@ const RoomController = (props) => {
         max={20}
         defaultValue={[0]}
         onValueChange={(val) => handleChange('rotation', val.value[0] * 0.2)}
-      >
+      ><span>Rotation</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -100,7 +101,7 @@ const RoomController = (props) => {
         max={10}
         defaultValue={[10]}
         onValueChange={(val) => handleChange('scale', val.value[0] * 0.1)}
-      >
+      ><span>Size</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
