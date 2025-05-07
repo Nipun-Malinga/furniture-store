@@ -1,29 +1,26 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { GridItem, useBreakpointValue } from '@chakra-ui/react';
 import React from 'react';
 import RoomBuilderContainer from '../components/RoomBuilderContainer';
 import SideBar from '../components/SideBar';
+import useRoom from '../store/useRoom';
 
 const Room = () => {
+  const isDesktop = useBreakpointValue({ base: false, md: true });
+
+  const { room } = useRoom();
   return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        md: `"aside main"`,
-      }}
-      templateColumns={{
-        base: '1fr',
-        md: '200px 1fr',
-      }}
-      height={'100vh'}
-      padding={'2.5rem 1rem'}
-    >
-      <GridItem>
-        <SideBar />
-      </GridItem>
+    <>
+      {isDesktop && room ? (
+        <GridItem area={'aside'}>
+          <SideBar />
+        </GridItem>
+      ) : (
+        <GridItem area={'aside'}></GridItem>
+      )}
       <GridItem>
         <RoomBuilderContainer />
       </GridItem>
-    </Grid>
+    </>
   );
 };
 

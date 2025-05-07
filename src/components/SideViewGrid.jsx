@@ -7,7 +7,6 @@ const angles = ['top', 'left', 'right', 'isometric'];
 
 const SideViewGrid = (props) => {
   const { setAngle } = useAngleStore();
-  console.log(props.products);
   return (
     <SimpleGrid width={'100%'} columns={{ base: 1, md: 2 }} gap={2}>
       {props.products

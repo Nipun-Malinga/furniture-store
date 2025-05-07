@@ -1,14 +1,23 @@
-import { Box } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 import React from 'react';
 import { Outlet } from 'react-router';
 
 const Layout = () => {
   return (
-    <>
-      <Box height={'100vh'}>
-        <Outlet />
-      </Box>
-    </>
+    <Grid
+      templateAreas={{
+        base: `"main"`,
+        md: `"aside main"`,
+      }}
+      templateColumns={{
+        base: '1fr',
+        md: 'auto 1fr',
+      }}
+      height={'100vh'}
+      gap={'0.5rem'}
+    >
+      <Outlet />
+    </Grid>
   );
 };
 

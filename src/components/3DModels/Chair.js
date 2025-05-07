@@ -1,7 +1,7 @@
 import { MeshBuilder, Mesh } from '@babylonjs/core';
 
-const chair = (scene) => {
-  const parent = new Mesh('chairParent', scene);
+const chair = (scene, name) => {
+  const parent = new Mesh(name ?? 'chairParent', scene);
 
   const seat = MeshBuilder.CreateBox('seat', { width: 2, depth: 2, height: 0.2 }, scene);
   seat.position.y = 1;

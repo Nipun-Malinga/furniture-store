@@ -1,23 +1,30 @@
-import { GridItem, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, GridItem, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 import React from 'react';
 import useRoom from '../store/useRoom';
 import RoomBuilder from './RoomBuilder';
 import RoomSelector from './RoomSelector';
+import RoomControllerContainer from './RoomControllerContainer';
 
 const RoomBuilderContainer = () => {
   const { room } = useRoom();
 
   return (
-    <>
+    <VStack height={'100%'} padding={'0.5rem'}>
       {/* TODO: Response the layout */}
-      <SimpleGrid templateColumns={'repeat(5, 1fr)'} templateRows={'repeat(5, 1fr)'} gap={5}>
-        <GridItem area={'1 / 1 / 5 / 5'}>{room && <RoomBuilder />}</GridItem>
-        <GridItem area={'1 / 5 / 5 / 6'}>
-          <RoomSelector />
-        </GridItem>
-        <GridItem area={'5 / 1 / 6 / 6'}></GridItem>
-      </SimpleGrid>
-    </>
+      <Flex
+        direction={{ base: 'column-reverse', md: 'row' }}
+        alignItems={{ base: 'center', md: 'start' }}
+        justifyContent={'center'}
+        height={'100%'}
+        width={'100%'}
+        gap={'0.5rem'}
+      >
+        {room && <RoomBuilder />}
+        <RoomSelector />
+      </Flex>
+
+      <RoomControllerContainer />
+    </VStack>
   );
 };
 
