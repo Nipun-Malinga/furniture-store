@@ -9,6 +9,9 @@ import diningChair from '../components/3DModels/dining_chair';
 import loungeChair from '../components/3DModels/lounge_chair';
 import stool from '../components/3DModels/stool';
 import bench from '../components/3DModels/bench';
+import CoffeeTable from '../components/3DModels/coffee_table';
+import wardrobes from '../components/3DModels/wardrobes';
+
 
 const data = [
   {
@@ -122,8 +125,8 @@ const data = [
         price: 249.99,
         rating: 4.4,
         ratingCount: 200,
-        model: null,
-        colors: ['#BC8F8F', '#CD853F'],
+        model: CoffeeTable,
+        colors: ['#CF9E9EFF', '#CD853F','#6A3C0EFF'],
       },
       {
         productId: 9,
@@ -229,6 +232,18 @@ const data = [
         model: bookshelf,
         colors: ['#D2691E', '#CD853F', 'black'],
       },
+      {
+        productId: 16,
+        name: "Wardrobes",
+        categoryId: 4,
+        categoryName: 'Storage',
+        description: 'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
+        price: 450.00,
+        rating: 4.5,
+        ratingCount: 450,
+        model: wardrobes,
+        colors: ['#D2691E', '#CD853F', '#8B4513'],
+      },
     ],
   },
   {
@@ -236,7 +251,7 @@ const data = [
     categoryId: 5,
     products: [
       {
-        productId: 16,
+        productId: 17,
         name: 'Table Lamp',
         modelId: null,
         categoryId: 5,
