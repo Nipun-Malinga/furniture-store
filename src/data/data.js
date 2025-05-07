@@ -11,7 +11,8 @@ import stool from '../components/3DModels/stool';
 import bench from '../components/3DModels/bench';
 import CoffeeTable from '../components/3DModels/coffee_table';
 import wardrobes from '../components/3DModels/wardrobes';
-
+import tableLamp from "../components/3DModels/tableLamp";
+import  modernReadingLight from "../components/3DModels/standReadingLight";
 
 const data = [
   {
@@ -240,11 +241,35 @@ const data = [
         name: 'Table Lamp',
         categoryId: 5,
         categoryName: 'Lighting',
-        description: 'Stylish bedside lamp for ambient lighting.',
+        description: 'Stylish desk lamp for working table.',
         price: 79.99,
         rating: 4.4,
         ratingCount: 140,
         model: lamp,
+        colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
+      },
+      {
+        productId: 18,
+        name: 'Table Side Lamp',
+        categoryId: 5,
+        categoryName: 'Lighting',
+        description: 'Stylish bedside lamp for ambient lighting.',
+        price: 199.99,
+        rating: 4.4,
+        ratingCount: 240,
+        model: tableLamp,
+        colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
+      },
+      {
+        productId: 19,
+        name: 'Reading Lamp',
+        categoryId: 5,
+        categoryName: 'Lighting',
+        description: 'Stylish table side lamp for reading purposes.',
+        price: 299.99,
+        rating: 4.6,
+        ratingCount: 340,
+        model: modernReadingLight,
         colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
       },
     ],
