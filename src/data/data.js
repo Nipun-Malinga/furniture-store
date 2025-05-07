@@ -3,6 +3,11 @@ import diningTable from "../components/3DModels/diningTable";
 import bed from "../components/3DModels/bed";
 import platformBed from "../components/3DModels/bed2";
 import bookshelf from "../components/3DModels/bookshelf";
+import sofa from "../components/3DModels/sofa";
+import tableLamp from "../components/3DModels/tableLamp";
+import modernReadingLight from "../components/3DModels/standReadingLight";
+
+
 
 const data = [
   {
@@ -210,6 +215,40 @@ const data = [
         model: bookshelf,
         colors: ['#D2691E', '#CD853F', 'black'],
       },
+    ],
+  },
+
+  {
+    categoryName: 'Lighting',
+    categoryId: 5,
+    products: [
+      {
+        productId: 16,
+        name: 'Table side lamp',
+        categoryId: 5,
+        categoryName: 'Lighting',
+        description:
+          'Stylish and modern customizable lamp.',
+        price: 199.99,
+        rating: 4.5,
+        ratingCount: 350,
+        model: tableLamp,
+        colors: ['#D2691E', '#CD853F', "#FFF8DC"],
+      },
+      {
+        productId: 17,
+        name: 'Reading Light',
+        categoryId: 5,
+        categoryName: 'Lighting',
+        description:
+          'Stylish and modern reading light with flexible arm and blue light free bulb',
+        price: 299.99,
+        rating: 3.5,
+        ratingCount: 250,
+        model:modernReadingLight,
+        colors: ['#D2691E', '#CD853F', "#FFF8DC"],
+      },
+     
     ],
   },
 ];
