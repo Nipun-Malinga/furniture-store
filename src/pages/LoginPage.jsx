@@ -65,6 +65,7 @@ const LoginPage = () => {
                 _hover={{ bg: 'whiteAlpha.300' }}
                 _focus={{ borderColor: 'cyan.300' }}
                 color='white'
+                w='385px'
               />
             </FormControl>
             <FormControl isRequired>
@@ -79,9 +80,11 @@ const LoginPage = () => {
                 _hover={{ bg: 'whiteAlpha.300' }}
                 _focus={{ borderColor: 'cyan.300' }}
                 color='white'
+                className='w-full'
+                w='385px'
               />
             </FormControl>
-            <Button type='submit' colorScheme='cyan' width='full'>
+            <Button type='submit' colorScheme='cyan' width='full' top={3}>
               Login
             </Button>
           </VStack>

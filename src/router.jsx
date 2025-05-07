@@ -11,11 +11,7 @@ import Layout from './pages/Layout';
 const router = createBrowserRouter([
   {
     index: true,
-    element: (
-      <ProtectedRoute>
-        <LoginPage />
-      </ProtectedRoute>
-    ),
+    element: <LoginPage />, // Unprotected login
   },
   {
     path: '/',
@@ -23,17 +19,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'dashboard',
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: 'category/:categoryId/product/:productId',
-            element: <FurnitureInfoContainer />,
+            element: (
+              <ProtectedRoute>
+                <FurnitureInfoContainer />
+              </ProtectedRoute>
+            ),
           },
         ],
       },
       {
         path: 'room',
-        element: <Room />,
+        element: (
+          <ProtectedRoute>
+            <Room />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

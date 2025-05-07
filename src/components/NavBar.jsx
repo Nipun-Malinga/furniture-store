@@ -1,7 +1,12 @@
 import { Box, Flex, Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.setItem('isLoggedIn', 'false');
+        navigate('/');
+      };
   return (
     <Flex
       as="nav"
@@ -31,8 +36,8 @@ const NavBar = () => {
         </Link>
       </Flex>
 
-      <Link to="/logout">
-        <Button>Logout</Button>
+      <Link to="/">
+        <Button onClick={handleLogout}>Logout</Button>
       </Link>
     </Flex>
   );
