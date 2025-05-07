@@ -1,21 +1,30 @@
-import { Grid } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 const Layout = () => {
   return (
     <Grid
       templateAreas={{
-        base: `"main"`,
-        md: `"aside main"`,
+        base: `"header" "main"`,
+        md: `"header header" "aside main"`,
       }}
       templateColumns={{
         base: '1fr',
-        md: 'auto 1fr',
+        md: '200px 1fr',
       }}
-      height={'100vh'}
-      gap={'0.5rem'}
+      templateRows={{
+        base: '64px 1fr',
+        md: '64px 1fr',
+      }}
+      height="100vh"
+      gap="0.5rem"
     >
+      <GridItem area="header" bg="blue.600" zIndex="1000" position="sticky" top="0">
+        <NavBar />
+      </GridItem>
+
       <Outlet />
     </Grid>
   );

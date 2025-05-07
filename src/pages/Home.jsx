@@ -3,6 +3,7 @@ import React from 'react';
 import { useOutlet } from 'react-router-dom';
 import SideBar from '../components/SideBar';
 
+
 const Home = () => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
@@ -11,7 +12,7 @@ const Home = () => {
   return (
     <>
       {isDesktop && (
-        <GridItem area={'aside'}>
+        <GridItem area={'aside'} >
           <SideBar type={'navigate'} />
         </GridItem>
       )}
