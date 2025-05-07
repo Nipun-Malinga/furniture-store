@@ -117,7 +117,7 @@ const data = [
         rating: 4.4,
         ratingCount: 200,
         model: CoffeeTable,
-        colors: ['#BC8F8F', '#CD853F'],
+        colors: ['#CF9E9EFF', '#CD853F','#6A3C0EFF'],
       },
       {
         productId: 9,
