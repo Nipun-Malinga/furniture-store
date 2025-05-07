@@ -1,13 +1,14 @@
-import chair from "../components/3DModels/Chair";
-import diningTable from "../components/3DModels/diningTable";
-import bed from "../components/3DModels/bed";
-import platformBed from "../components/3DModels/bed2";
-import bookshelf from "../components/3DModels/bookshelf";
-import sofa from "../components/3DModels/sofa";
-import tableLamp from "../components/3DModels/tableLamp";
-import modernReadingLight from "../components/3DModels/standReadingLight";
-
-
+import diningTable from '../components/3DModels/diningTable';
+import bed from '../components/3DModels/queen_bed';
+import sofa from '../components/3DModels/sofa';
+import bookshelf from '../components/3DModels/bookshelf';
+import lamp from "../components/3DModels/lamp";
+import platformBed from "../components/3DModels/platform_bed";
+import armChair from '../components/3DModels/arm_chair';
+import diningChair from '../components/3DModels/dining_chair';
+import loungeChair from '../components/3DModels/lounge_chair';
+import stool from '../components/3DModels/stool';
+import bench from '../components/3DModels/bench';
 
 const data = [
   {
@@ -24,7 +25,7 @@ const data = [
         price: 299.99,
         rating: 4.5,
         ratingCount: 245,
-        model: chair,
+        model: armChair,
         colors: ['#FFD700', '#FFA500', '#33ecff'],
       },
       {
@@ -36,7 +37,7 @@ const data = [
         price: 149.99,
         rating: 4.2,
         ratingCount: 180,
-        model: chair,
+        model: diningChair,
         colors: ['#DAA520', '#B8860B'],
       },
       {
@@ -48,7 +49,7 @@ const data = [
         price: 349.99,
         rating: 4.7,
         ratingCount: 320,
-        model: chair,
+        model: loungeChair,
         colors: ['#F4A460', '#D2B48C'],
       },
       {
@@ -72,7 +73,7 @@ const data = [
         price: 89.99,
         rating: 4.1,
         ratingCount: 150,
-        model: null,
+        model: stool,
         colors: ['#C0C0C0', '#808080'],
       },
       {
@@ -84,7 +85,7 @@ const data = [
         price: 189.99,
         rating: 4.3,
         ratingCount: 230,
-        model: null,
+        model: bench,
         colors: ['#8B0000', '#A52A2A'],
       },
     ],
@@ -167,7 +168,6 @@ const data = [
       },
     ],
   },
-  // 🆕 Add new category "Beds" (append this object to the `data` array)
   {
     categoryName: 'Beds',
     categoryId: 3,
@@ -181,8 +181,8 @@ const data = [
         price: 999.99,
         rating: 4.9,
         ratingCount: 410,
-        model: bed, // 🆕 Linking your imported bed model
-        colors: ['#D2B48C', '#8B4513', '#F5F5DC'], // Optional color options
+        model: bed,
+        colors: ['#D2B48C', '#8B4513', '#F5F5DC'],
       },
       {
         productId: 14,
@@ -193,7 +193,7 @@ const data = [
         price: 1099.99,
         rating: 4.8,
         ratingCount: 360,
-        model: platformBed, // 🆕 New platform-style bed
+        model: platformBed,
         colors: ["#A0522D", "#DEB887", "#FFF8DC"],
       },
     ],
@@ -204,11 +204,10 @@ const data = [
     products: [
       {
         productId: 15,
-        name: 'Bookshelf',
+        name: "Bookshelf",
         categoryId: 4,
-        categoryName: 'Bookshelf',
-        description:
-          'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
+        categoryName: 'Storage',
+        description: 'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
         price: 150.22,
         rating: 3.9,
         ratingCount: 350,
@@ -217,38 +216,22 @@ const data = [
       },
     ],
   },
-
   {
     categoryName: 'Lighting',
     categoryId: 5,
     products: [
       {
         productId: 16,
-        name: 'Table side lamp',
+        name: 'Table Lamp',
         categoryId: 5,
         categoryName: 'Lighting',
-        description:
-          'Stylish and modern customizable lamp.',
-        price: 199.99,
-        rating: 4.5,
-        ratingCount: 350,
-        model: tableLamp,
-        colors: ['#D2691E', '#CD853F', "#FFF8DC"],
+        description: 'Stylish bedside lamp for ambient lighting.',
+        price: 79.99,
+        rating: 4.4,
+        ratingCount: 140,
+        model: lamp,
+        colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
       },
-      {
-        productId: 17,
-        name: 'Reading Light',
-        categoryId: 5,
-        categoryName: 'Lighting',
-        description:
-          'Stylish and modern reading light with flexible arm and blue light free bulb',
-        price: 299.99,
-        rating: 3.5,
-        ratingCount: 250,
-        model:modernReadingLight,
-        colors: ['#D2691E', '#CD853F', "#FFF8DC"],
-      },
-     
     ],
   },
 ];
