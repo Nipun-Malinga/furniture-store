@@ -168,7 +168,6 @@ const data = [
       },
     ],
   },
-  // 🆕 Add new category "Beds" (append this object to the `data` array)
   {
     categoryName: 'Beds',
     categoryId: 3,
@@ -182,8 +181,8 @@ const data = [
         price: 999.99,
         rating: 4.9,
         ratingCount: 410,
-        model: bed, // 🆕 Linking your imported bed model
-        colors: ['#D2B48C', '#8B4513', '#F5F5DC'], // Optional color options
+        model: bed,
+        colors: ['#D2B48C', '#8B4513', '#F5F5DC'],
       },
       {
         productId: 14,
@@ -194,7 +193,7 @@ const data = [
         price: 1099.99,
         rating: 4.8,
         ratingCount: 360,
-        model: platformBed, // 🆕 New platform-style bed
+        model: platformBed,
         colors: ["#A0522D", "#DEB887", "#FFF8DC"],
       },
     ],
@@ -204,14 +203,11 @@ const data = [
     categoryId: 4,
     products: [
       {
-        productId: 14,
-        name: 'Bookshelf',
         productId: 15,
         name: "Bookshelf",
         categoryId: 4,
-        categoryName: 'Bookshelf',
-        description:
-          'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
+        categoryName: 'Storage',
+        description: 'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
         price: 150.22,
         rating: 3.9,
         ratingCount: 350,
@@ -222,12 +218,12 @@ const data = [
   },
   {
     categoryName: 'Lighting',
-    categoryId: 4,
+    categoryId: 5,
     products: [
       {
         productId: 16,
         name: 'Table Lamp',
-        categoryId: 4,
+        categoryId: 5,
         categoryName: 'Lighting',
         description: 'Stylish bedside lamp for ambient lighting.',
         price: 79.99,
@@ -237,8 +233,7 @@ const data = [
         colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
       },
     ],
-  }
-  
+  },
 ];
 
 export default data;
