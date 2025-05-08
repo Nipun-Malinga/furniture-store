@@ -3,6 +3,7 @@ import {
   Button,
   Field,
   Fieldset,
+  HStack,
   Input,
   Portal,
   Select,
@@ -25,18 +26,26 @@ const RoomSelector = () => {
   const { coordinates, setCoordinates, clearCoordinates } = useCoordinatesStore();
   const { savedLayout } = useLayoutSavedStore();
   const [savedLayouts, setSavedLayouts] = useState([]);
-
-  useEffect(() => {
-    console.log('Coordinates');
-    console.log(coordinates);
-    console.log('Products');
-    console.log(products);
-  }, [coordinates, products]);
-
+  
   useEffect(() => {
     const layouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
     setSavedLayouts(layouts);
   }, [savedLayout]);
+
+  const deleteLayout = (designNameToRemove) => {
+    const savedLayoutsRaw = localStorage.getItem('savedLayouts');
+    const layouts = savedLayoutsRaw ? JSON.parse(savedLayoutsRaw) : [];
+
+    const updatedLayouts = layouts.filter((layout) => layout.designName !== designNameToRemove);
+
+    localStorage.setItem('savedLayouts', JSON.stringify(updatedLayouts));
+  };
+
+  const handleDelete = (designName) => {
+    deleteLayout(designName);
+    const updatedLayouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+    setSavedLayouts(updatedLayouts);
+  };
 
   const handleSubmit = (design) => {
     const room = design.find((model) => model.modelType == 'room');
@@ -83,7 +92,7 @@ const RoomSelector = () => {
     <Box
       width={{ base: '100%', md: 'auto' }}
       height={'100%'}
-      overflowY={'scroll'}
+      overflowY={'auto'}
       overflowX={'hidden'}
     >
       {/* TODO:Add better validations  */}
@@ -116,7 +125,7 @@ const RoomSelector = () => {
           setRoom(values);
         }}
       >
-        <Fieldset.Root size='lg'>
+        <Fieldset.Root size='lg' width={'100%'}>
           <Stack>
             <Fieldset.Legend>Room Creator</Fieldset.Legend>
             <Fieldset.HelperText>Create Your Preferred Room</Fieldset.HelperText>
@@ -160,7 +169,7 @@ const RoomSelector = () => {
               {selectedRoom.dimensions.map((dim) => (
                 <Field.Root key={dim.value}>
                   <Field.Label>{dim.name}</Field.Label>
-                  <Input name={dim.value} width='10rem' placeholder={dim.name} />
+                  <Input name={dim.value} width={'100%'} placeholder={dim.name} />
                 </Field.Root>
               ))}
             </Fieldset.Content>
@@ -176,19 +185,24 @@ const RoomSelector = () => {
         <Text fontWeight={'medium'}>Saved Layouts</Text>
         <VStack alignItems={'start'}>
           {savedLayouts.map((layout, key) => (
-            <Button
-              key={key}
-              variant={'ghost'}
-              onClick={() => {
-                clearProducts();
-                clearCoordinates();
-                setTimeout(() => {
-                  handleSubmit(layout.design);
-                }, 0);
-              }}
-            >
-              {layout.designName}
-            </Button>
+            <HStack width={'100%'} justifyContent={'space-between'}>
+              <Button
+                key={key}
+                variant={'solid'}
+                onClick={() => {
+                  clearProducts();
+                  clearCoordinates();
+                  setTimeout(() => {
+                    handleSubmit(layout.design);
+                  }, 0);
+                }}
+              >
+                {layout.designName}
+              </Button>
+              <Button size='xs' colorScheme='red' onClick={() => handleDelete(layout.designName)}>
+                Delete
+              </Button>
+            </HStack>
           ))}
         </VStack>
       </Box>
