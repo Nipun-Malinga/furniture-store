@@ -7,7 +7,7 @@ import InfoCard from './InfoCard';
 import useAngleStore from '../store/useAngleStore';
 import SideViewGrid from './SideViewGrid';
 
-const FurnitureInfoContainer = (props) => {
+const FurnitureInfoContainer = () => {
   const { categoryId, productId } = useParams();
 
   const category = data.filter((category) => category.categoryId == categoryId);

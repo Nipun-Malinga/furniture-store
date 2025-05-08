@@ -17,7 +17,8 @@ const useCoordinatesStore = create((set) => ({
         };
       }
     }),
-}));
 
+  clearCoordinates: () => set(() => ({ coordinates: [] })),
+}));
 
 export default useCoordinatesStore;

@@ -1,7 +1,7 @@
 import { Box, SimpleGrid } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
-import FurnitureViewer from './FurnitureViewer';
 import useAngleStore from '../store/useAngleStore';
+import FurnitureViewer from './FurnitureViewer';
 
 const angles = ['top', 'left', 'right', 'isometric'];
 

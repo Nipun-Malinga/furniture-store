@@ -1,6 +1,5 @@
 import {
   Breadcrumb,
-  Button,
   Heading,
   HStack,
   RadioGroup,
@@ -10,7 +9,6 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { FaHeart } from 'react-icons/fa';
 import useColorStore from '../store/useColorStore';
 
 const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
@@ -65,9 +63,8 @@ const InfoCard = (props) => {
             </Text>
           </HStack>
         </HStack>
-      <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
+        <Text width={{ base: '35ch', md: '45ch' }}>{props.description ?? 'No Description'}</Text>
       </VStack>
-
 
       <RadioGroup.Root
         defaultValue={color}
