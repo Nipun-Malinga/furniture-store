@@ -15,15 +15,15 @@ const RoomController = (props) => {
   const product = props.product;
 
   const [localCoordinates, setLocalCoordinates] = useState({
-    modelId: product.modelId,
-    productId: product.productId,
-    categoryId: product.categoryId,
-    X: product.position.x ? product.position.x : 0,
-    Y: product.position.y ? product.position.y : -2,
-    Z: product.position.z ? product.position.z : 0,
-    rotation: product.rotation ? product.rotation : 0,
-    scale: product.scale ? product.scale : 0,
-    color: product.color ? product.color : null,
+    modelId: product?.modelId ?? '',
+    productId: product?.productId ?? '',
+    categoryId: product?.categoryId ?? '',
+    X: product?.position?.x ?? 0,
+    Y: product?.position?.y ?? -2,
+    Z: product?.position?.z ?? 0,
+    rotation: product?.rotation ?? 0,
+    scale: product?.scale ?? 1,
+    color: product?.color ?? null,
   });
 
   const handleChange = (key, value) => {
@@ -59,7 +59,7 @@ const RoomController = (props) => {
         width='200px'
         min={-20}
         max={20}
-        defaultValue={product.position.x ? [product.position.x * 5] : [0]}
+        defaultValue={[product?.position?.x ? product.position.x * 5 : 0]}
         onValueChange={(val) => handleChange('X', val.value[0] * 0.2)}
       >
         <span>Left-Right</span>
@@ -76,7 +76,7 @@ const RoomController = (props) => {
         width='200px'
         min={-100}
         max={100}
-        defaultValue={product.position.y ? [product.position.y * 5] : [-2]}
+        defaultValue={[product?.position?.y ? product.position.y * 5 : -2]}
         onValueChange={(val) => handleChange('Y', val.value[0] * 0.05)}
       >
         <span>Up-Down</span>
@@ -93,7 +93,7 @@ const RoomController = (props) => {
         width='200px'
         min={-20}
         max={20}
-        defaultValue={product.position.z ? [product.position.z * 5] : [0]}
+        defaultValue={[product?.position?.z ? product.position.z * 5 : 0]}
         onValueChange={(val) => handleChange('Z', val.value[0] * 0.2)}
       >
         <span>Forward-Backward</span>
@@ -110,7 +110,7 @@ const RoomController = (props) => {
         width='200px'
         min={-20}
         max={20}
-        defaultValue={product.rotation ? [product.rotation * 5] : [0]}
+        defaultValue={[product?.rotation ? product.rotation * 5 : 0]}
         onValueChange={(val) => handleChange('rotation', val.value[0] * 0.2)}
       >
         <span>Rotation</span>
@@ -127,7 +127,7 @@ const RoomController = (props) => {
         width='200px'
         min={0.1}
         max={10}
-        defaultValue={product.scale ? [product.scale * 10] : [10]}
+        defaultValue={[product?.scale ? product.scale * 10 : 10]}
         onValueChange={(val) => handleChange('scale', val.value[0] * 0.1)}
       >
         <span>Size</span>
