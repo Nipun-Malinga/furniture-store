@@ -3,18 +3,15 @@ import { MeshBuilder, Mesh } from '@babylonjs/core';
 const armChair = (scene, name) => {
   const parent = new Mesh(name ?? 'armChairParent', scene);
 
-  // Seat
   const seat = MeshBuilder.CreateBox('seat', { width: 2, depth: 2, height: 0.2 }, scene);
   seat.position.y = 1;
   seat.parent = parent;
 
-  // Backrest
   const back = MeshBuilder.CreateBox('back', { width: 2, depth: 0.2, height: 2 }, scene);
   back.position.y = 2;
   back.position.z = -0.9;
   back.parent = parent;
 
-  // Legs
   const leg1 = MeshBuilder.CreateBox('leg1', { width: 0.2, depth: 0.2, height: 1 }, scene);
   leg1.position.set(-0.9, 0.5, -0.9);
   leg1.parent = parent;
@@ -33,7 +30,6 @@ const armChair = (scene, name) => {
   leg4.position.z = 0.9;
   leg4.parent = parent;
 
-  // Armrests
   const armrestHeight = 1.5;
   const armrest = MeshBuilder.CreateBox('armrest', { width: 0.2, depth: 2, height: 0.2 }, scene);
   armrest.position.set(-1.1, armrestHeight, 0);

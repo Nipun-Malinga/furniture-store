@@ -276,44 +276,46 @@ const RoomBuilder = (props) => {
   return (
     <Box position={'relative'} height={'100%'} width={'100%'}>
       <HStack position={'absolute'}>
-        <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <Button size='sm'>
-              <IoIosSave />
-            </Button>
-          </Dialog.Trigger>
-          <Portal>
-            <Dialog.Backdrop />
-            <Dialog.Positioner>
-              <Dialog.Content>
-                <Dialog.Header>
-                  <Dialog.Title>Save Layout</Dialog.Title>
-                </Dialog.Header>
-                <Dialog.Body>
-                  <Input
-                    placeholder='Enter Layout Name'
-                    size='sm'
-                    value={designName}
-                    onChange={(e) => setDesignName(e.target.value)}
-                  />
-                </Dialog.Body>
-                <Dialog.Footer>
-                  <Dialog.ActionTrigger asChild>
-                    <Button variant='outline'>Cancel</Button>
-                  </Dialog.ActionTrigger>
-                  <Dialog.ActionTrigger asChild>
-                    <Button mt={3} size='sm' colorScheme='blue' onClick={handleSubmit}>
-                      Save
-                    </Button>
-                  </Dialog.ActionTrigger>
-                </Dialog.Footer>
-                <Dialog.CloseTrigger asChild>
-                  <CloseButton size='sm' />
-                </Dialog.CloseTrigger>
-              </Dialog.Content>
-            </Dialog.Positioner>
-          </Portal>
-        </Dialog.Root>
+        {props.enableModelSaver && (
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <Button size='sm'>
+                <IoIosSave />
+              </Button>
+            </Dialog.Trigger>
+            <Portal>
+              <Dialog.Backdrop />
+              <Dialog.Positioner>
+                <Dialog.Content>
+                  <Dialog.Header>
+                    <Dialog.Title>Save Layout</Dialog.Title>
+                  </Dialog.Header>
+                  <Dialog.Body>
+                    <Input
+                      placeholder='Enter Layout Name'
+                      size='sm'
+                      value={designName}
+                      onChange={(e) => setDesignName(e.target.value)}
+                    />
+                  </Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.ActionTrigger asChild>
+                      <Button variant='outline'>Cancel</Button>
+                    </Dialog.ActionTrigger>
+                    <Dialog.ActionTrigger asChild>
+                      <Button mt={3} size='sm' colorScheme='blue' onClick={handleSubmit}>
+                        Save
+                      </Button>
+                    </Dialog.ActionTrigger>
+                  </Dialog.Footer>
+                  <Dialog.CloseTrigger asChild>
+                    <CloseButton size='sm' />
+                  </Dialog.CloseTrigger>
+                </Dialog.Content>
+              </Dialog.Positioner>
+            </Portal>
+          </Dialog.Root>
+        )}
 
         <Button onClick={() => takeScreenshot(engineRef.current, cameraRef.current)}>
           <RiScreenshot2Fill />
