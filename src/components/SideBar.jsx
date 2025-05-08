@@ -23,12 +23,13 @@ const SideBar = (props) => {
                     onClick={() => {
                       if (props.type === 'navigate') {
                         navigate(`category/${product.categoryId}/product/${product.productId}`);
+                      } else {
+                        product.modelId = Math.round(Math.random() * 100);
+                        setProduct({
+                          ...product,
+                          modelId: `model-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+                        });
                       }
-                      product.modelId = Math.round(Math.random() * 100);
-                      setProduct({
-                        ...product,
-                        modelId: `model-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-                      });
                     }}
                     variant='outline'
                     style={{ width: '100%' }}

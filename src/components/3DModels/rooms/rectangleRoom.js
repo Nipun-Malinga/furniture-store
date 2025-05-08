@@ -1,18 +1,14 @@
-import { Mesh, MeshBuilder } from '@babylonjs/core';
+import { Mesh, MeshBuilder, StandardMaterial, Color3 } from '@babylonjs/core';
 
-const rectangleRoom = (scene, width, length) => {
+const rectangleRoom = (scene, color, width, height, length) => {
   const parent = new Mesh('rectangleRoomParent', scene);
 
   const wallThickness = 0.1;
-  const wallHeight = 1;
+  const wallHeight = height;
 
   const wall1 = MeshBuilder.CreateBox(
     'wall1',
-    {
-      width: width,
-      height: wallHeight,
-      depth: wallThickness,
-    },
+    { width, height: wallHeight, depth: wallThickness },
     scene
   );
   wall1.position.z = -length / 2;
@@ -24,11 +20,7 @@ const rectangleRoom = (scene, width, length) => {
 
   const wall3 = MeshBuilder.CreateBox(
     'wall3',
-    {
-      width: length,
-      height: wallHeight,
-      depth: wallThickness,
-    },
+    { width: length, height: wallHeight, depth: wallThickness },
     scene
   );
   wall3.rotation.y = Math.PI / 2;
@@ -45,6 +37,15 @@ const rectangleRoom = (scene, width, length) => {
   ground.parent = parent;
 
   parent.position.y = -1;
+
+  if (color) {
+    const material = new StandardMaterial('rectangleRoomColor', scene);
+    material.diffuseColor = Color3.FromHexString(color);
+
+    parent.getChildMeshes().forEach((mesh) => {
+      mesh.material = material;
+    });
+  }
 
   return parent;
 };

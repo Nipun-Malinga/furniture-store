@@ -7,15 +7,21 @@ const rooms = createListCollection({
     {
       label: 'Square Room',
       value: 'square',
+      color: null,
       room: squareRoom,
-      dimensions: [{ name: 'Width', value: 'width', default: 5 }],
+      dimensions: [
+        { name: 'Width', value: 'width', default: 5 },
+        { name: 'Height', value: 'height', default: 5 },
+      ],
     },
     {
       label: 'Rectangle Room',
       value: 'rectangle',
+      color: null,
       room: rectangleRoom,
       dimensions: [
         { name: 'Length', value: 'length', default: 60 },
+        { name: 'Height', value: 'height', default: 5 },
         { name: 'Width', value: 'width', default: 5 },
       ],
     },

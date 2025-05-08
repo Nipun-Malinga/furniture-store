@@ -1,6 +1,6 @@
-import { Mesh, MeshBuilder } from '@babylonjs/core';
+import { Mesh, MeshBuilder, StandardMaterial, Color3 } from '@babylonjs/core';
 
-const squareRoom = (scene, width) => {
+const squareRoom = (scene, color, width, height) => {
   const parent = new Mesh('squareRoomParent', scene);
 
   const roomWidth = width;
@@ -11,7 +11,7 @@ const squareRoom = (scene, width) => {
     'wall1',
     {
       width: roomWidth,
-      height: wallHeight,
+      height: height,
       depth: wallThickness,
     },
     scene
@@ -41,6 +41,15 @@ const squareRoom = (scene, width) => {
   ground.parent = parent;
 
   parent.position.y = -1;
+
+  if (color) {
+    const material = new StandardMaterial('rectangleRoomColor', scene);
+    material.diffuseColor = Color3.FromHexString(color);
+
+    parent.getChildMeshes().forEach((mesh) => {
+      mesh.material = material;
+    });
+  }
 
   return parent;
 };
