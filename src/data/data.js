@@ -129,7 +129,7 @@ const data = [
         rating: 4.4,
         ratingCount: 200,
         model: CoffeeTable,
-        colors: ['#E09797', '#CD3FBA','#6A3C0E'],
+        colors: ['#8B4513','#CD853F', '#FFF8DC'],
       },
       {
         productId: 9,
@@ -181,7 +181,7 @@ const data = [
         rating: 4.3,
         ratingCount: 190,
         model: nightstand,
-        colors: ['#AF108A', '#697ADF','#D12828'],
+        colors: ['#610B0B','#C87C30', '#EDE1B3'],
       },
     ],
   },
