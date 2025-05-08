@@ -93,7 +93,7 @@ const RoomSelector = () => {
 
   return (
     <Box
-      width={{ base: '100%', md: '25%' }}
+      width={{ base: '100%', md: '100%' }}
       height={'100%'}
       overflowY={'auto'}
       overflowX={'hidden'}
