@@ -1,59 +1,48 @@
-import { MeshBuilder, Mesh, StandardMaterial, Color3, Vector3 } from '@babylonjs/core';
+import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 
 const diningTable = (scene) => {
-  const parent = new Mesh("diningTableParent", scene);
+  const parent = new Mesh(name ?? 'diningTableParent', scene);
 
-  
-  const woodMat = new StandardMaterial("woodMat", scene);
-  
+  const woodMat = new StandardMaterial('woodMat', scene);
+  woodMat.diffuseColor = new Color3(0.6, 0.4, 0.2);
 
-  
-  const tabletop = MeshBuilder.CreateBox("tabletop", {
-    width: 4,
-    depth: 1.8,
-    height: 0.1
-  }, scene);
+  const legMat = new StandardMaterial('legMat', scene);
+  legMat.diffuseColor = new Color3(0.2, 0.1, 0.05);
+
+  const tabletop = MeshBuilder.CreateBox(
+    'tabletop',
+    {
+      width: 4,
+      depth: 1.8,
+      height: 0.1,
+    },
+    scene
+  );
   tabletop.position.y = 1.1;
   tabletop.material = woodMat;
   tabletop.parent = parent;
 
-  
-  const legMat = new StandardMaterial("legMat", scene);
-  legMat.diffuseColor = new Color3(0.2, 0.1, 0.05);
-
-  
-  const createLeg = (name, xPos, scene) => {
-    const legBase = MeshBuilder.CreateBox(name, {
-      width: 0.1,
-      depth: 0.1,
-      height: 1.2,
-    }, scene);
-    legBase.material = legMat;
-
-    
-    legBase.rotation.z = Math.PI / 6;
-    legBase.position.set(xPos, 0.5, 0.5);
-    legBase.parent = parent;
-
-    const legMirror = legBase.clone('${name}_mirror');
-    legMirror.rotation.z = -Math.PI / 6;
-    legMirror.position.z = -0.5;
-    legMirror.parent = parent;
-
-    
-    const baseConnector = MeshBuilder.CreateBox('${name}_base', {
-      width: 0.5,
-      depth: 1,
-      height: 0.2,
-    }, scene);
-    baseConnector.material = legMat;
-    baseConnector.position.set(xPos, 0.05, 0);
-    baseConnector.parent = parent;
+  const createLeg = (name, x, z) => {
+    const leg = MeshBuilder.CreateBox(
+      name,
+      {
+        width: 0.1,
+        depth: 0.1,
+        height: 1.1,
+      },
+      scene
+    );
+    leg.position.set(x, 0.55, z);
+    leg.material = legMat;
+    leg.parent = parent;
   };
 
-  
-  createLeg('legLeft', -1.2, scene);
-  createLeg('legRight', 1.2, scene);
+  createLeg('leg1', -1.8, -0.8);
+  createLeg('leg2', -1.8, 0.8);
+  createLeg('leg3', 1.8, -0.8);
+  createLeg('leg4', 1.8, 0.8);
+
+  parent.position.y = -1;
 
   return parent;
 };

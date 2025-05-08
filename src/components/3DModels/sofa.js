@@ -1,7 +1,7 @@
 import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 
 const sofa = (scene, name) => {
-  const parent = new Mesh(name, 'sofaParent', scene);
+  const parent = new Mesh(name ?? 'sofaParent', scene);
 
   const baseMat = new StandardMaterial('sofaBaseMat', scene);
   baseMat.diffuseColor = new Color3(0.2, 0.15, 0.1);

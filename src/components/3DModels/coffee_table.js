@@ -1,64 +1,60 @@
-import { MeshBuilder, Mesh, StandardMaterial, Color3, Vector3 } from '@babylonjs/core';
+import { MeshBuilder, Mesh, StandardMaterial, Color3 } from '@babylonjs/core';
 
-const CoffeeTable = (scene) => {
-  const parent = new Mesh("elegantTableParent", scene);
+const CoffeeTable = (scene, name) => {
+  const parent = new Mesh(name ?? 'coffeeTableParent', scene);
 
-  
-  const woodMat = new StandardMaterial("woodMat", scene);
-  
+  const woodMat = new StandardMaterial('woodMat', scene);
+  woodMat.diffuseColor = new Color3(0.55, 0.27, 0.07);
 
-  
-  const top = MeshBuilder.CreateCylinder("top", {
-    diameter: 1.6,
-    height: 0.06,
-    tessellation: 64,
-  }, scene);
-  top.position.y = 0.8;
+  const top = MeshBuilder.CreateCylinder(
+    'top',
+    {
+      diameter: 2,
+      height: 0.1,
+      tessellation: 64,
+    },
+    scene
+  );
+  top.position.y = 1;
   top.material = woodMat;
   top.parent = parent;
 
-  
-  const base = MeshBuilder.CreateCylinder("base", {
-    diameter: 1.4,
-    height: 0.06,
-    tessellation: 64,
-  }, scene);
-  base.position.y = 0;
+  const base = MeshBuilder.CreateCylinder(
+    'base',
+    {
+      diameter: 1.6,
+      height: 0.1,
+      tessellation: 64,
+    },
+    scene
+  );
+  base.position.y = 0.1;
   base.material = woodMat;
   base.parent = parent;
 
-  
-  const legThickness = 0.06;
-  const legWidth = 0.14;
-  const legHeight = 0.7;
+  const legHeight = 0.9;
+  const legRadius = 0.06;
 
-  const createXLeg = (name, rotationY) => {
-    const leg1 = MeshBuilder.CreateBox(name + "leg1", {
-      height: legHeight,
-      width: legWidth,
-      depth: legThickness
-    }, scene);
-    leg1.rotation.z = -Math.PI / 6;
-    leg1.position = new Vector3(-0.2, legHeight / 2 + 0.03, 0);
-    leg1.material = woodMat;
-
-    const leg2 = leg1.clone(name + "leg2");
-    leg2.rotation.z = Math.PI / 6;
-    leg2.position.x = 0.2;
-
-    const group = new Mesh(name + "Group", scene);
-    leg1.parent = group;
-    leg2.parent = group;
-
-    group.rotation.y = rotationY;
-    group.parent = parent;
+  const createLeg = (x, z, name) => {
+    const leg = MeshBuilder.CreateCylinder(
+      name,
+      {
+        diameter: legRadius * 2,
+        height: legHeight,
+      },
+      scene
+    );
+    leg.position.set(x, legHeight / 2 + 0.1, z);
+    leg.material = woodMat;
+    leg.parent = parent;
   };
 
-  
-  createXLeg("xLeg1", 0);
-  createXLeg("xLeg2", Math.PI / 2);
+  createLeg(-0.5, -0.5, 'leg1');
+  createLeg(-0.5, 0.5, 'leg2');
+  createLeg(0.5, -0.5, 'leg3');
+  createLeg(0.5, 0.5, 'leg4');
 
-  parent.position.y = -1;
+  parent.position.y = -2;
 
   return parent;
 };

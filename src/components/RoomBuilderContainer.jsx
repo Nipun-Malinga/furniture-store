@@ -21,7 +21,7 @@ const RoomBuilderContainer = () => {
       >
         {room && (
           <HStack width={'100%'} height={'100%'}>
-            <RoomBuilder />
+            <RoomBuilder enableModelSaver={true} />
             <RoomBuilder mode={'2d'} />
           </HStack>
         )}

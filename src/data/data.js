@@ -2,8 +2,8 @@ import diningTable from '../components/3DModels/diningTable';
 import bed from '../components/3DModels/queen_bed';
 import sofa from '../components/3DModels/sofa';
 import bookshelf from '../components/3DModels/bookshelf';
-import lamp from "../components/3DModels/lamp";
-import platformBed from "../components/3DModels/platform_bed";
+import lamp from '../components/3DModels/lamp';
+import platformBed from '../components/3DModels/platform_bed';
 import armChair from '../components/3DModels/arm_chair';
 import diningChair from '../components/3DModels/dining_chair';
 import loungeChair from '../components/3DModels/lounge_chair';
@@ -11,8 +11,8 @@ import stool from '../components/3DModels/stool';
 import bench from '../components/3DModels/bench';
 import CoffeeTable from '../components/3DModels/coffee_table';
 import wardrobes from '../components/3DModels/wardrobes';
-import tableLamp from "../components/3DModels/tableLamp";
-import  modernReadingLight from "../components/3DModels/standReadingLight";
+import tableLamp from '../components/3DModels/tableLamp';
+import modernReadingLight from '../components/3DModels/standReadingLight';
 import nightstand from '../components/3DModels/nightStand';
 import cabinet from '../components/3DModels/cabinet';
 
@@ -84,7 +84,7 @@ const data = [
         rating: 4.1,
         ratingCount: 150,
         model: stool,
-        colors: ['#C0C0C0', '#808080','#1E1E1E'],
+        colors: ['#C0C0C0', '#808080', '#1E1E1E'],
       },
       {
         productId: 6,
@@ -116,7 +116,7 @@ const data = [
         rating: 4.6,
         ratingCount: 280,
         model: diningTable,
-        colors: ['#DEB887', '#70A48C','#6A3C0E'],
+        colors: ['#DEB887', '#70A48C', '#6A3C0E'],
       },
       {
         productId: 8,
@@ -129,46 +129,7 @@ const data = [
         rating: 4.4,
         ratingCount: 200,
         model: CoffeeTable,
-        colors: ['#8B4513','#CD853F', '#FFF8DC'],
-      },
-      {
-        productId: 9,
-        name: 'Side Table',
-        modelId: null,
-        categoryId: 2,
-        categoryName: 'Tables',
-        description: 'Minimalistic side table for small spaces.',
-        price: 199.99,
-        rating: 4.2,
-        ratingCount: 150,
-        model: null,
-        colors: ['#F5DEB3', '#FFE4B5'],
-      },
-      {
-        productId: 10,
-        name: 'Console Table',
-        modelId: null,
-        categoryId: 2,
-        categoryName: 'Tables',
-        description: 'Stylish console table for hallways and entryways.',
-        price: 299.99,
-        rating: 4.0,
-        ratingCount: 120,
-        model: null,
-        colors: ['#D2691E', '#CD853F'],
-      },
-      {
-        productId: 11,
-        name: 'Desk',
-        modelId: null,
-        categoryId: 2,
-        categoryName: 'Tables',
-        description: 'Functional desk for home offices and studies.',
-        price: 399.99,
-        rating: 4.5,
-        ratingCount: 340,
-        model: null,
-        colors: ['#556B2F', '#6B8E23'],
+        colors: ['#8B4513', '#CD853F', '#FFF8DC'],
       },
       {
         productId: 12,
@@ -181,7 +142,7 @@ const data = [
         rating: 4.3,
         ratingCount: 190,
         model: nightstand,
-        colors: ['#610B0B','#C87C30', '#EDE1B3'],
+        colors: ['#610B0B', '#C87C30', '#EDE1B3'],
       },
     ],
   },
@@ -237,11 +198,13 @@ const data = [
       },
       {
         productId: 16,
-        name: "Wardrobes",
+        name: 'Wardrobes',
+        modelId: null,
         categoryId: 4,
         categoryName: 'Storage',
-        description: 'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
-        price: 450.00,
+        description:
+          'Stylish and functional storage solutions to organize your space with ease and modern appeal.',
+        price: 450.0,
         rating: 4.5,
         ratingCount: 450,
         model: wardrobes,
@@ -249,15 +212,17 @@ const data = [
       },
       {
         productId: 17,
-        name: "Cabinet",
+        name: 'Cabinet',
+        modelId: null,
         categoryId: 4,
         categoryName: 'Storage',
-        description: 'A sleek cabinet with 3 hanging rods and 3 adjustable shelves, made from high-quality wood for efficient storage.',
-        price: 420.00,
+        description:
+          'A sleek cabinet with 3 hanging rods and 3 adjustable shelves, made from high-quality wood for efficient storage.',
+        price: 420.0,
         rating: 4.2,
         ratingCount: 410,
         model: cabinet,
-        colors: ['#8B4513','#CD853F', '#FFF8DC'],
+        colors: ['#8B4513', '#CD853F', '#FFF8DC'],
       },
     ],
   },
@@ -281,6 +246,7 @@ const data = [
       {
         productId: 19,
         name: 'Table Side Lamp',
+        modelId: null,
         categoryId: 5,
         categoryName: 'Lighting',
         description: 'Stylish bedside lamp for ambient lighting.',
@@ -293,6 +259,7 @@ const data = [
       {
         productId: 20,
         name: 'Reading Lamp',
+        modelId: null,
         categoryId: 5,
         categoryName: 'Lighting',
         description: 'Stylish table side lamp for reading purposes.',
