@@ -1,6 +1,6 @@
 import { Mesh, MeshBuilder } from '@babylonjs/core';
 
-const squareRoom = (scene, width) => {
+const squareRoom = (scene, width, height) => {
   const parent = new Mesh('squareRoomParent', scene);
 
   const roomWidth = width;
@@ -11,7 +11,7 @@ const squareRoom = (scene, width) => {
     'wall1',
     {
       width: roomWidth,
-      height: wallHeight,
+      height: height,
       depth: wallThickness,
     },
     scene

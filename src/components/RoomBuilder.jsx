@@ -111,7 +111,7 @@ const RoomBuilder = (props) => {
         rooms.items
           .filter((r) => r.value == room.selectedRoom)
           .map((r) => {
-            const selectedRoom = r.room(scene, room.width, room.length);
+            const selectedRoom = r.room(scene, room.width, room.height, room.length);
             selectedRoom.position.y = -2;
             setSavedDesign([
               {
@@ -119,6 +119,7 @@ const RoomBuilder = (props) => {
                 model: {
                   name: r.value,
                   width: room.width,
+                  height: room.height,
                   length: room.length,
                   position: {
                     x: selectedRoom.position.x,
