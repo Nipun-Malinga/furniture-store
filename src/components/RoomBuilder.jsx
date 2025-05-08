@@ -9,6 +9,8 @@ import {
   StandardMaterial,
   Tools,
   Vector3,
+  ShadowGenerator,
+  DirectionalLight,
 } from '@babylonjs/core';
 import { Box, Button, CloseButton, Dialog, HStack, Input, Portal } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -105,7 +107,11 @@ const RoomBuilder = (props) => {
 
       cameraRef.current = camera;
 
-      const light = new HemisphericLight('hemisphericLight', new Vector3(0, 5, 10), scene);
+      const light = new DirectionalLight('dirLight', new Vector3(-1, -2, -1), scene);
+      light.position = new Vector3(0, 10, 0);
+
+      const shadowGenerator = new ShadowGenerator(1024, light);
+      shadowGenerator.useExponentialShadowMap = true;
 
       room &&
         rooms.items
@@ -140,6 +146,7 @@ const RoomBuilder = (props) => {
           }
 
           const model = product.model(scene, product.modelId ?? null);
+          shadowGenerator.addShadowCaster(model)
 
           if (!model) {
             console.warn(`Failed to create model for product:`, product);
