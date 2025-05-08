@@ -13,6 +13,7 @@ import CoffeeTable from '../components/3DModels/coffee_table';
 import wardrobes from '../components/3DModels/wardrobes';
 import tableLamp from "../components/3DModels/tableLamp";
 import  modernReadingLight from "../components/3DModels/standReadingLight";
+import nightstand from '../components/3DModels/nightStand';
 
 const data = [
   {
@@ -178,8 +179,8 @@ const data = [
         price: 159.99,
         rating: 4.3,
         ratingCount: 190,
-        model: null,
-        colors: ['#808000', '#BDB76B'],
+        model: nightstand,
+        colors: ['#5F5F35FF', '#212644FF','#8E543CFF'],
       },
     ],
   },
