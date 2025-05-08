@@ -10,6 +10,8 @@ import {
   Stack,
   Text,
   VStack,
+  ColorPicker,
+  parseColor,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import data from '../data/data';
@@ -51,6 +53,7 @@ const RoomSelector = () => {
     const room = design.find((model) => model.modelType == 'room');
     setRoom({
       selectedRoom: room.model.name,
+      roomColor: room.model.roomColor,
       width: room.model.width,
       length: room.model.length,
     });
@@ -174,6 +177,26 @@ const RoomSelector = () => {
               ))}
             </Fieldset.Content>
           )}
+
+          <ColorPicker.Root defaultValue={parseColor('#eb5e41')}>
+            <ColorPicker.HiddenInput name='roomColor' />
+            <ColorPicker.Label>Room Color</ColorPicker.Label>
+            <ColorPicker.Control>
+              <ColorPicker.Input />
+              <ColorPicker.Trigger />
+            </ColorPicker.Control>
+            <Portal>
+              <ColorPicker.Positioner>
+                <ColorPicker.Content>
+                  <ColorPicker.Area />
+                  <HStack>
+                    <ColorPicker.EyeDropper size='xs' variant='outline' />
+                    <ColorPicker.Sliders />
+                  </HStack>
+                </ColorPicker.Content>
+              </ColorPicker.Positioner>
+            </Portal>
+          </ColorPicker.Root>
 
           <Button type='submit' alignSelf='flex-start'>
             Generate

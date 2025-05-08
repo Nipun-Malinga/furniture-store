@@ -7,6 +7,7 @@ const rooms = createListCollection({
     {
       label: 'Square Room',
       value: 'square',
+      color: null,
       room: squareRoom,
       dimensions: [
         { name: 'Width', value: 'width', default: 5 },
@@ -16,6 +17,7 @@ const rooms = createListCollection({
     {
       label: 'Rectangle Room',
       value: 'rectangle',
+      color: null,
       room: rectangleRoom,
       dimensions: [
         { name: 'Length', value: 'length', default: 60 },

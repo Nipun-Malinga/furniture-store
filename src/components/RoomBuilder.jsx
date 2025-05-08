@@ -21,6 +21,7 @@ import useCoordinatesStore from '../store/useCoordinatesStore';
 import useProduct from '../store/useProduct';
 import useRoom from '../store/useRoom';
 import useLayoutSavedStore from '../store/useLayoutSavedStore';
+import rgbaStringToHex from '../services/rgbaToHex';
 
 const RoomBuilder = (props) => {
   const { room } = useRoom();
@@ -117,7 +118,14 @@ const RoomBuilder = (props) => {
         rooms.items
           .filter((r) => r.value == room.selectedRoom)
           .map((r) => {
-            const selectedRoom = r.room(scene, room.width, room.height, room.length);
+            console.log(`Room Color: ${room.roomColor}`);
+            const selectedRoom = r.room(
+              scene,
+              rgbaStringToHex(room.roomColor),
+              room.width,
+              room.height,
+              room.length
+            );
             selectedRoom.position.y = -2;
             setSavedDesign([
               {
@@ -127,6 +135,7 @@ const RoomBuilder = (props) => {
                   width: room.width,
                   height: room.height,
                   length: room.length,
+                  roomColor: room.roomColor,
                   position: {
                     x: selectedRoom.position.x,
                     y: selectedRoom.position.y,
@@ -146,7 +155,7 @@ const RoomBuilder = (props) => {
           }
 
           const model = product.model(scene, product.modelId ?? null);
-          shadowGenerator.addShadowCaster(model)
+          shadowGenerator.addShadowCaster(model);
 
           if (!model) {
             console.warn(`Failed to create model for product:`, product);
