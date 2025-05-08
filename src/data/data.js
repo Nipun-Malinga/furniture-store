@@ -84,7 +84,7 @@ const data = [
         rating: 4.1,
         ratingCount: 150,
         model: stool,
-        colors: ['#C0C0C0', '#808080'],
+        colors: ['#C0C0C0', '#808080','#1E1E1E'],
       },
       {
         productId: 6,
