@@ -9,7 +9,7 @@ A web-based interactive furniture store application built for the HCI coursework
 - 🌀 **Angle-Based Viewing** – Click to rotate and view furniture from different angles.
 - 🏠 **Room Builder**:
   - Select room type.
-  - Set dimensions (width, height, length).
+  - Set dimensions (width, height, length, color).
   - Add, move, rotate, resize, and recolor furniture items.
   - Save your room layout for future use.
 - 💾 **Persistent Design Editor** – Load and modify saved designs anytime.
@@ -37,9 +37,8 @@ A web-based interactive furniture store application built for the HCI coursework
 1. **Fork or Clone the Repository**
 
    ```bash
-   git clone <your-forked-repo-url>
+   git clone https://github.com/Nipun-Malingafurniture-store.git
    cd furniture-store
-
    ```
 
 2. **Install Dependencies**
@@ -47,7 +46,6 @@ A web-based interactive furniture store application built for the HCI coursework
    ```bash
    npm install
    npm run dev
-
    ```
 
 3. **Login Credentials**
