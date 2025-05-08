@@ -116,7 +116,7 @@ const data = [
         rating: 4.6,
         ratingCount: 280,
         model: diningTable,
-        colors: ['#DEB887', '#70A48C','#6A3C0EFF'],
+        colors: ['#DEB887', '#70A48C','#6A3C0E'],
       },
       {
         productId: 8,
@@ -129,7 +129,7 @@ const data = [
         rating: 4.4,
         ratingCount: 200,
         model: CoffeeTable,
-        colors: ['#E09797FF', '#CD3FBAFF','#6A3C0EFF'],
+        colors: ['#E09797', '#CD3FBA','#6A3C0E'],
       },
       {
         productId: 9,
@@ -181,7 +181,7 @@ const data = [
         rating: 4.3,
         ratingCount: 190,
         model: nightstand,
-        colors: ['#AF108AFF', '#697ADFFF','#D12828FF'],
+        colors: ['#AF108A', '#697ADF','#D12828'],
       },
     ],
   },
