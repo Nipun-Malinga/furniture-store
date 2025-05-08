@@ -21,7 +21,7 @@ const Layout = () => {
       height="100%"
       gap="0.5rem"
     >
-      <GridItem area="header" bg="blue.600" zIndex="1000" position="sticky" top="0">
+      <GridItem area="header" zIndex="1000" position="sticky" top="0">
         <NavBar />
       </GridItem>
 
