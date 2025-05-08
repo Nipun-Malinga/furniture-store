@@ -175,6 +175,23 @@ const RoomBuilder = (props) => {
               console.warn(`Invalid color string: ${product.color}`, err);
             }
           }
+
+          const serializedMesh = {
+            name: product?.modelId ?? 'unknown',
+            modelType: 'mesh',
+            productId: product?.productId ?? null,
+            categoryId: product?.categoryId ?? null,
+            position: {
+              x: product?.position?.x ?? 0,
+              y: product?.position?.y ?? -2,
+              z: product?.position?.z ?? 0,
+            },
+            rotation: product?.rotation ?? 0,
+            scale: product?.scale ?? 1,
+            color: product?.color ?? null,
+          };
+
+          setSavedDesign((prev) => [...prev, serializedMesh]);
         });
 
       scene.onBeforeRenderObservable.add(() => {
