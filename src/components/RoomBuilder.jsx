@@ -18,6 +18,7 @@ import rooms from '../data/rooms';
 import useCoordinatesStore from '../store/useCoordinatesStore';
 import useProduct from '../store/useProduct';
 import useRoom from '../store/useRoom';
+import useLayoutSavedStore from '../store/useLayoutSavedStore';
 
 const RoomBuilder = (props) => {
   const { room } = useRoom();
@@ -25,6 +26,7 @@ const RoomBuilder = (props) => {
   const { coordinates } = useCoordinatesStore();
   const [savedDesign, setSavedDesign] = useState([]);
   const [designName, setDesignName] = useState('');
+  const { setSavedLayout } = useLayoutSavedStore();
 
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
@@ -54,6 +56,7 @@ const RoomBuilder = (props) => {
     }
 
     localStorage.setItem('savedLayouts', JSON.stringify(layouts));
+    setSavedLayout(design);
     console.log('Saved layouts:', layouts);
   };
 

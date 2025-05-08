@@ -1,26 +1,44 @@
-import { Box, Button, Field, Fieldset, Input, Portal, Select, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Field,
+  Fieldset,
+  Input,
+  Portal,
+  Select,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import data from '../data/data';
 import rooms from '../data/rooms';
 import useCoordinatesStore from '../store/useCoordinatesStore';
 import useProduct from '../store/useProduct';
 import useRoom from '../store/useRoom';
+import useLayoutSavedStore from '../store/useLayoutSavedStore';
 
 const RoomSelector = () => {
   const [selectedRoom, setSelectedRoom] = useState();
   const { setRoom } = useRoom();
   const { products, setProduct, clearProducts } = useProduct();
-  const { coordinates, setCoordinates } = useCoordinatesStore();
+  const { coordinates, setCoordinates, clearCoordinates } = useCoordinatesStore();
+  const { savedLayout } = useLayoutSavedStore();
+  const [savedLayouts, setSavedLayouts] = useState([]);
 
   useEffect(() => {
+    console.log('Coordinates');
     console.log(coordinates);
-  }, [coordinates]);
+    console.log('Products');
+    console.log(products);
+  }, [coordinates, products]);
 
-  const savedLayouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+  useEffect(() => {
+    const layouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+    setSavedLayouts(layouts);
+  }, [savedLayout]);
 
   const handleSubmit = (design) => {
-    clearProducts();
-
     const room = design.find((model) => model.modelType == 'room');
     setRoom({
       selectedRoom: room.model.name,
@@ -52,8 +70,6 @@ const RoomSelector = () => {
       };
     });
 
-    console.log(matchedModels);
-
     const models = matchedModels
       .filter((model) => model.productData)
       .map((model) => model.productData);
@@ -64,7 +80,12 @@ const RoomSelector = () => {
   };
 
   return (
-    <Box width={{ base: '100%', md: 'auto' }}>
+    <Box
+      width={{ base: '100%', md: 'auto' }}
+      height={'100%'}
+      overflowY={'scroll'}
+      overflowX={'hidden'}
+    >
       {/* TODO:Add better validations  */}
       <form
         style={{
@@ -151,16 +172,26 @@ const RoomSelector = () => {
         </Fieldset.Root>
       </form>
 
-      {savedLayouts.map((layout, key) => (
-        <Text
-          key={key}
-          onClick={() => {
-            handleSubmit(layout.design);
-          }}
-        >
-          {layout.designName}
-        </Text>
-      ))}
+      <Box marginY={'1rem'}>
+        <Text fontWeight={'medium'}>Saved Layouts</Text>
+        <VStack alignItems={'start'}>
+          {savedLayouts.map((layout, key) => (
+            <Button
+              key={key}
+              variant={'ghost'}
+              onClick={() => {
+                clearProducts();
+                clearCoordinates();
+                setTimeout(() => {
+                  handleSubmit(layout.design);
+                }, 0);
+              }}
+            >
+              {layout.designName}
+            </Button>
+          ))}
+        </VStack>
+      </Box>
     </Box>
   );
 };

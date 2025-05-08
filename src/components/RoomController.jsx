@@ -13,6 +13,7 @@ const RoomController = (props) => {
   const { products, removeProduct } = useProduct();
 
   const product = props.product;
+  console.log(`Model ID: ${product?.modelId}`);
 
   const [localCoordinates, setLocalCoordinates] = useState({
     modelId: product?.modelId ?? '',
