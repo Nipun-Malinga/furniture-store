@@ -1,9 +1,9 @@
-import { Box, Flex, GridItem, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
+import { Flex, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 import useRoom from '../store/useRoom';
 import RoomBuilder from './RoomBuilder';
-import RoomSelector from './RoomSelector';
 import RoomControllerContainer from './RoomControllerContainer';
+import RoomSelector from './RoomSelector';
 
 const RoomBuilderContainer = () => {
   const { room } = useRoom();

@@ -18,7 +18,7 @@ const RoomController = (props) => {
     modelId: product.modelId,
     productId: product.productId,
     categoryId: product.categoryId,
-    X: product.position.x ? product.position.x  : 0,
+    X: product.position.x ? product.position.x : 0,
     Y: product.position.y ? product.position.y : -2,
     Z: product.position.z ? product.position.z : 0,
     rotation: product.rotation ? product.rotation : 0,
@@ -62,7 +62,7 @@ const RoomController = (props) => {
         defaultValue={product.position.x ? [product.position.x * 5] : [0]}
         onValueChange={(val) => handleChange('X', val.value[0] * 0.2)}
       >
-        <span>Left-Wright</span>
+        <span>Left-Right</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -79,7 +79,7 @@ const RoomController = (props) => {
         defaultValue={product.position.y ? [product.position.y * 5] : [-2]}
         onValueChange={(val) => handleChange('Y', val.value[0] * 0.05)}
       >
-        <span>Up and Down</span>
+        <span>Up-Down</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />

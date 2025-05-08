@@ -2,9 +2,9 @@ import { Box, Button, Field, Fieldset, Input, Portal, Select, Stack, Text } from
 import React, { useEffect, useState } from 'react';
 import data from '../data/data';
 import rooms from '../data/rooms';
-import useRoom from '../store/useRoom';
-import useProduct from '../store/useProduct';
 import useCoordinatesStore from '../store/useCoordinatesStore';
+import useProduct from '../store/useProduct';
+import useRoom from '../store/useRoom';
 
 const RoomSelector = () => {
   const [selectedRoom, setSelectedRoom] = useState();
