@@ -14,6 +14,7 @@ import wardrobes from '../components/3DModels/wardrobes';
 import tableLamp from "../components/3DModels/tableLamp";
 import  modernReadingLight from "../components/3DModels/standReadingLight";
 import nightstand from '../components/3DModels/nightStand';
+import cabinet from '../components/3DModels/cabinet';
 
 const data = [
   {
@@ -246,6 +247,18 @@ const data = [
         model: wardrobes,
         colors: ['#D2691E', '#CD853F', '#8B4513'],
       },
+      {
+        productId: 17,
+        name: "Cabinet",
+        categoryId: 4,
+        categoryName: 'Storage',
+        description: 'A sleek cabinet with 3 hanging rods and 3 adjustable shelves, made from high-quality wood for efficient storage.',
+        price: 420.00,
+        rating: 4.2,
+        ratingCount: 410,
+        model: cabinet,
+        colors: ['#8B4513','#CD853F', '#FFF8DC'],
+      },
     ],
   },
   {
@@ -253,7 +266,7 @@ const data = [
     categoryId: 5,
     products: [
       {
-        productId: 17,
+        productId: 18,
         name: 'Table Lamp',
         modelId: null,
         categoryId: 5,
@@ -266,7 +279,7 @@ const data = [
         colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
       },
       {
-        productId: 18,
+        productId: 19,
         name: 'Table Side Lamp',
         categoryId: 5,
         categoryName: 'Lighting',
@@ -278,7 +291,7 @@ const data = [
         colors: ['#F5F5DC', '#8B4513', '#D2B48C'],
       },
       {
-        productId: 19,
+        productId: 20,
         name: 'Reading Lamp',
         categoryId: 5,
         categoryName: 'Lighting',
