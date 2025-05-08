@@ -59,10 +59,6 @@ const RoomSelector = () => {
     models.forEach((product) => {
       setProduct(product);
     });
-
-    matchedModels.map((model) => {
-      setCoordinates(model);
-    });
   };
 
   return (

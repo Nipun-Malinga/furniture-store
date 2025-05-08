@@ -9,14 +9,7 @@ const RoomControllerContainer = () => {
   return (
     <HStack width={'100%'} height={'100%'} overflowX={'auto'} gap={20}>
       {products.map((product, key) => (
-        <RoomController
-          key={key}
-          modelId={product.modelId}
-          productId={product.productId}
-          categoryId={product.categoryId}
-          name={product.name}
-          colors={product.colors}
-        />
+        <RoomController key={key} product={product} />
       ))}
     </HStack>
   );
