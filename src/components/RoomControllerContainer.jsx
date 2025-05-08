@@ -1,5 +1,5 @@
 import { HStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useProduct from '../store/useProduct';
 import RoomController from './RoomController';
 

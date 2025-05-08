@@ -9,7 +9,7 @@ import useRoom from '../store/useRoom';
 const RoomSelector = () => {
   const [selectedRoom, setSelectedRoom] = useState();
   const { setRoom } = useRoom();
-  const { products, setProduct } = useProduct();
+  const { products, setProduct, clearProducts } = useProduct();
   const { coordinates, setCoordinates } = useCoordinatesStore();
 
   useEffect(() => {
@@ -19,6 +19,8 @@ const RoomSelector = () => {
   const savedLayouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
 
   const handleSubmit = (design) => {
+    clearProducts();
+
     const room = design.find((model) => model.modelType == 'room');
     setRoom({
       selectedRoom: room.model.name,
