@@ -83,7 +83,7 @@ const RoomBuilder = (props) => {
         camera = new FreeCamera('orthoCamera', new Vector3(0, 5, 0), scene);
         camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
 
-        const distance = 5;
+        const distance = 7.5;
         const aspect = engine.getRenderWidth() / engine.getRenderHeight();
 
         camera.orthoLeft = -distance * aspect;
