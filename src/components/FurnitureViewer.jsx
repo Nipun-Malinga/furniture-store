@@ -1,4 +1,5 @@
 import {
+  Animation,
   ArcRotateCamera,
   Color3,
   Engine,
@@ -7,14 +8,13 @@ import {
   StandardMaterial,
   Tools,
   Vector3,
-  Animation,
 } from '@babylonjs/core';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import '@babylonjs/loaders/glTF';
 import { Box, Button } from '@chakra-ui/react';
 import { useCallback, useEffect, useRef } from 'react';
-import useColorStore from '../store/useColorStore';
 import useAngleStore from '../store/useAngleStore';
+import useColorStore from '../store/useColorStore';
 
 const positions = {
   top: new Vector3(0, 10, 0),

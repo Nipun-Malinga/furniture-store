@@ -6,6 +6,11 @@ const useProduct = create((set) => ({
     set((state) => ({
       products: [...state.products, product],
     })),
+  removeProduct: (modelId) =>
+    set((state) => ({
+      products: state.products.filter((p) => p.modelId !== modelId),
+    })),
+  clearProducts: () => set(() => ({ products: [] })),
 }));
 
 export default useProduct;

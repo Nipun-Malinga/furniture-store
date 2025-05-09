@@ -1,14 +1,103 @@
-import { Box, Button, Field, Fieldset, Input, Portal, Select, Stack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Field,
+  Fieldset,
+  HStack,
+  Input,
+  Portal,
+  Select,
+  Stack,
+  Text,
+  VStack,
+  ColorPicker,
+  parseColor,
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import data from '../data/data';
 import rooms from '../data/rooms';
+import useCoordinatesStore from '../store/useCoordinatesStore';
+import useProduct from '../store/useProduct';
 import useRoom from '../store/useRoom';
+import useLayoutSavedStore from '../store/useLayoutSavedStore';
 
 const RoomSelector = () => {
   const [selectedRoom, setSelectedRoom] = useState();
   const { setRoom } = useRoom();
+  const { products, setProduct, clearProducts } = useProduct();
+  const { coordinates, setCoordinates, clearCoordinates } = useCoordinatesStore();
+  const { savedLayout } = useLayoutSavedStore();
+  const [savedLayouts, setSavedLayouts] = useState([]);
+
+  useEffect(() => {
+    const layouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+    setSavedLayouts(layouts);
+  }, [savedLayout]);
+
+  const deleteLayout = (designNameToRemove) => {
+    const savedLayoutsRaw = localStorage.getItem('savedLayouts');
+    const layouts = savedLayoutsRaw ? JSON.parse(savedLayoutsRaw) : [];
+
+    const updatedLayouts = layouts.filter((layout) => layout.designName !== designNameToRemove);
+
+    localStorage.setItem('savedLayouts', JSON.stringify(updatedLayouts));
+  };
+
+  const handleDelete = (designName) => {
+    deleteLayout(designName);
+    const updatedLayouts = JSON.parse(localStorage.getItem('savedLayouts') || '[]');
+    setSavedLayouts(updatedLayouts);
+  };
+
+  const handleSubmit = (design) => {
+    const room = design.find((model) => model.modelType == 'room');
+    setRoom({
+      selectedRoom: room.model.name,
+      roomColor: room.model.roomColor,
+      width: room.model.width,
+      length: room.model.length,
+    });
+
+    const savedMeshes = design.filter((model) => model.modelType === 'mesh');
+
+    const matchedModels = savedMeshes.map((mesh) => {
+      const category = data.find((c) => c.categoryId === mesh.categoryId);
+      if (!category) return null;
+
+      const product = category.products.find((p) => p.productId === mesh.productId);
+      if (!product) return null;
+
+      const enrichedProduct = {
+        ...product,
+        modelId: mesh.name,
+        position: mesh.position,
+        rotation: mesh.rotation,
+        scale: mesh.scale,
+        color: mesh.color,
+      };
+
+      return {
+        ...mesh,
+        productData: enrichedProduct,
+      };
+    });
+
+    const models = matchedModels
+      .filter((model) => model.productData)
+      .map((model) => model.productData);
+
+    models.forEach((product) => {
+      setProduct(product);
+    });
+  };
 
   return (
-    <Box width={{ base: '100%', md: 'auto' }}>
+    <Box
+      width={{ base: '100%', md: '100%' }}
+      height={'100%'}
+      overflowY={'auto'}
+      overflowX={'hidden'}
+    >
       {/* TODO:Add better validations  */}
       <form
         style={{
@@ -39,7 +128,7 @@ const RoomSelector = () => {
           setRoom(values);
         }}
       >
-        <Fieldset.Root size='lg'>
+        <Fieldset.Root size='lg' width={'100%'}>
           <Stack>
             <Fieldset.Legend>Room Creator</Fieldset.Legend>
             <Fieldset.HelperText>Create Your Preferred Room</Fieldset.HelperText>
@@ -83,17 +172,73 @@ const RoomSelector = () => {
               {selectedRoom.dimensions.map((dim) => (
                 <Field.Root key={dim.value}>
                   <Field.Label>{dim.name}</Field.Label>
-                  <Input name={dim.value} width='10rem' placeholder={dim.name} />
+                  <Input name={dim.value} width={'100%'} placeholder={dim.name} />
                 </Field.Root>
               ))}
             </Fieldset.Content>
           )}
+
+          <ColorPicker.Root defaultValue={parseColor('#eb5e41')}>
+            <ColorPicker.HiddenInput name='roomColor' />
+            <ColorPicker.Label>Room Color</ColorPicker.Label>
+            <ColorPicker.Control>
+              <ColorPicker.Input />
+              <ColorPicker.Trigger />
+            </ColorPicker.Control>
+            <Portal>
+              <ColorPicker.Positioner>
+                <ColorPicker.Content>
+                  <ColorPicker.Area />
+                  <HStack>
+                    <ColorPicker.EyeDropper size='xs' variant='outline' />
+                    <ColorPicker.Sliders />
+                  </HStack>
+                </ColorPicker.Content>
+              </ColorPicker.Positioner>
+            </Portal>
+          </ColorPicker.Root>
 
           <Button type='submit' alignSelf='flex-start'>
             Generate
           </Button>
         </Fieldset.Root>
       </form>
+
+      <Box marginY={'1rem'}>
+        <Text fontWeight={'medium'}>Saved Layouts</Text>
+        <br />
+        <VStack alignItems={'start'}>
+          {savedLayouts.map((layout, key) => (
+            <HStack key={key} width={'100%'} justifyContent={'space-between'}>
+              <Button
+                variant={'solid'}
+                bg='#8b6d5c'
+                color='white'
+                _hover={{ bg: '' }}
+                onClick={() => {
+                  clearProducts();
+                  clearCoordinates();
+                  setTimeout(() => {
+                    handleSubmit(layout.design);
+                  }, 0);
+                }}
+              >
+                View
+              </Button>
+              <span> {layout.designName}</span>
+              <Button
+                size='xs'
+                bg='red.500'
+                color='white'
+                _hover={{ bg: 'red.600' }}
+                onClick={() => handleDelete(layout.designName)}
+              >
+                Delete
+              </Button>
+            </HStack>
+          ))}
+        </VStack>
+      </Box>
     </Box>
   );
 };

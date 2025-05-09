@@ -1,38 +1,49 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router-dom'; // ✅ Use react-router-dom
+import { createBrowserRouter } from 'react-router-dom';
 import FurnitureInfoContainer from './components/FurnitureInfoContainer';
 import Home from './pages/Home';
-import Layout from './pages/Layout';
 import Room from './pages/Room';
 import LoginPage from './pages/LoginPage';
-import ProtectedRoute from './ProtectedRoute'; // ✅ You must create this
+import ProtectedRoute from './ProtectedRoute';
+import Layout from './pages/Layout';
 
+/*TODO: Fix Protected Router Issues */
 const router = createBrowserRouter([
   {
+    index: true,
+    element: <LoginPage />, // Unprotected login
+  },
+  {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <Layout />
-      </ProtectedRoute>
-    ),
+    element: <Layout />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        path: 'dashboard',
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            path: 'category/:categoryId/product/:productId',
+            element: (
+              <ProtectedRoute>
+                <FurnitureInfoContainer />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
       {
-        path: 'category/:categoryId/product/:productId',
-        element: <FurnitureInfoContainer />,
+        path: 'room',
+        element: (
+          <ProtectedRoute>
+            <Room />
+          </ProtectedRoute>
+        ),
       },
     ],
-  },
-  {
-    path: '/room', // ✅ still public unless you wrap it in ProtectedRoute too
-    element: <Room />,
-  },
-  {
-    path: '/login', // ✅ login page should be outside layout
-    element: <LoginPage />,
   },
 ]);
 

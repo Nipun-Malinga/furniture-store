@@ -1,21 +1,30 @@
-import { Box, Slider, VStack, RadioGroup, RatingGroup, HStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Box, Slider, VStack, RadioGroup, RatingGroup, HStack, Button } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import useCoordinatesStore from '../store/useCoordinatesStore';
 import useColorStore from '../store/useColorStore';
+import useProduct from '../store/useProduct';
 
 const colors = ['#F56565', '#48BB78', '#4299E1', '#9F7AEA'];
 
+/*TODO: Tune Calculations */
 const RoomController = (props) => {
-  const { color, setColor } = useColorStore();
+  const { color } = useColorStore();
   const { setCoordinates } = useCoordinatesStore();
+  const { products, removeProduct } = useProduct();
+
+  const product = props.product;
+  console.log(`Model ID: ${product?.modelId}`);
+
   const [localCoordinates, setLocalCoordinates] = useState({
-    modelId: props.modelId,
-    X: 0,
-    Y: -2,
-    Z: 0,
-    rotation: 0,
-    scale: 1,
-    color: null,
+    modelId: product?.modelId ?? '',
+    productId: product?.productId ?? '',
+    categoryId: product?.categoryId ?? '',
+    X: product?.position?.x ?? 0,
+    Y: product?.position?.y ?? -2,
+    Z: product?.position?.z ?? 0,
+    rotation: product?.rotation ?? 0,
+    scale: product?.scale ?? 1,
+    color: product?.color ?? null,
   });
 
   const handleChange = (key, value) => {
@@ -27,16 +36,34 @@ const RoomController = (props) => {
     setCoordinates(updated); // Sync to global store
   };
 
+  useEffect(() => {
+    console.log(`Product ID: ${product.productId}`);
+    console.log(products);
+  }, [products]);
+
   return (
     <VStack>
+      <Button
+        bg='red.500'
+        color='white'
+        _hover={{ bg: 'red.600' }}
+        onClick={() => {
+          removeProduct(product.modelId);
+        }}
+      >
+        Delete
+      </Button>
+
       {/* POSITION: X */}
+      <span style={{ fontWeight: 'bold' }}>{product.name}</span>
       <Slider.Root
         width='200px'
         min={-20}
         max={20}
-        defaultValue={[0]}
+        defaultValue={[product?.position?.x ? product.position.x * 5 : 0]}
         onValueChange={(val) => handleChange('X', val.value[0] * 0.2)}
       >
+        <span>Left-Right</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -50,9 +77,10 @@ const RoomController = (props) => {
         width='200px'
         min={-100}
         max={100}
-        defaultValue={[2]}
+        defaultValue={[product?.position?.y ? product.position.y * 5 : -2]}
         onValueChange={(val) => handleChange('Y', val.value[0] * 0.05)}
       >
+        <span>Up-Down</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -66,9 +94,10 @@ const RoomController = (props) => {
         width='200px'
         min={-20}
         max={20}
-        defaultValue={[0]}
+        defaultValue={[product?.position?.z ? product.position.z * 5 : 0]}
         onValueChange={(val) => handleChange('Z', val.value[0] * 0.2)}
       >
+        <span>Forward-Backward</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -82,9 +111,10 @@ const RoomController = (props) => {
         width='200px'
         min={-20}
         max={20}
-        defaultValue={[0]}
+        defaultValue={[product?.rotation ? product.rotation * 5 : 0]}
         onValueChange={(val) => handleChange('rotation', val.value[0] * 0.2)}
       >
+        <span>Rotation</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -98,9 +128,10 @@ const RoomController = (props) => {
         width='200px'
         min={0.1}
         max={10}
-        defaultValue={[10]}
+        defaultValue={[product?.scale ? product.scale * 10 : 10]}
         onValueChange={(val) => handleChange('scale', val.value[0] * 0.1)}
       >
+        <span>Size</span>
         <Slider.Control>
           <Slider.Track>
             <Slider.Range />
@@ -116,8 +147,8 @@ const RoomController = (props) => {
         }}
       >
         <HStack gap='6'>
-          {props.colors
-            ? props.colors.map((color, key) => (
+          {product.colors
+            ? product.colors.map((color, key) => (
                 <RadioGroup.Item key={key} value={color}>
                   <RadioGroup.ItemHiddenInput />
                   <RadioGroup.ItemIndicator background={color} />
